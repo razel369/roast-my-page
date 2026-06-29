@@ -14,6 +14,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ManageSubscriptionButton } from "@/components/ManageSubscriptionButton";
 
+// Render-blocking metadata only — use the parent layout's defaults;
+// /welcome is mostly a logged-in destination, not a marketing page.
+
 function WelcomeInner() {
   const params = useSearchParams();
   const checkoutId = params.get("checkout_id") || params.get("session_id");

@@ -1,5 +1,3 @@
-import type { MetadataRoute } from "next";
-
 export const metadata = {
   title: "Changelog — Roast My Page",
   description: "What shipped, what changed. Updated as we ship.",

@@ -38,6 +38,7 @@ export default function PrivacyPage() {
             "Nothing. By default, no account is required and no server-side log of your URLs is kept.",
             "If you submit your email to the optional newsletter form, we store it so we can send you conversion tips. Unsubscribe at any time.",
             "Plausible analytics (only loaded if enabled) counts page views. No cookies, no fingerprinting, no cross-site tracking.",
+            "If you upgrade to Pro, we set an authentication cookie (rmp_pro_token, 30-day expiry). It is required to call the roast endpoint at your elevated rate. Clear cookies to remove.",
           ].map((line, i) => (
             <li key={i} className="flex gap-3 border-l-4 border-ink-900 pl-4">
               <span className="font-mono text-xs text-ink-500 w-6 shrink-0">−</span>
@@ -79,12 +80,41 @@ export default function PrivacyPage() {
           className="display mt-10 text-2xl sm:text-3xl"
           style={{ fontVariationSettings: "'wght' 700, 'opsz' 144" }}
         >
+          Cookies and local storage
+        </h2>
+        <ul className="list-none space-y-2 pl-0">
+          {[
+            "rmp_pro_token — Pro authentication, 30 days. Set on /welcome, sent on every /api/roast call. Required to use the elevated rate. Clear via browser settings.",
+            "Plausible analytics — only set when NEXT_PUBLIC_PLAUSIBLE_DOMAIN is configured. Plausible is cookieless by design.",
+            "rmp_history_v1 — localStorage on your device only. Holds your saved verdicts. Never transmitted.",
+            "rmp_onboarded_v1, rmp_privacy_ack_v1, rmp_subscribed_v1 — localStorage flags for the onboarding tooltip, privacy notice, and email-capture dismissal. Device-local.",
+          ].map((line, i) => (
+            <li key={i} className="flex gap-3 border-l-4 border-ink-900 pl-4">
+              <span className="font-mono text-xs text-ink-500 w-6 shrink-0">−</span>
+              <span>{line}</span>
+            </li>
+          ))}
+        </ul>
+
+        <h2
+          className="display mt-10 text-2xl sm:text-3xl"
+          style={{ fontVariationSettings: "'wght' 700, 'opsz' 144" }}
+        >
           Third parties
         </h2>
         <p>
-          We use Vercel for hosting (privacy policy at vercel.com/legal/privacy-policy)
-          and, optionally, Plausible for analytics (plausible.io/data-policy).
-          Neither receives any URLs you submit unless you publish a share link yourself.
+          We use Vercel for hosting (privacy policy at{" "}
+          <a
+            href="https://vercel.com/legal/privacy-policy"
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-vermillion decoration-2 underline-offset-4 hover:text-vermillion"
+          >
+            vercel.com/legal/privacy-policy
+          </a>
+          ), Polar.sh for Pro billing (polar.sh/legal/privacy), and, optionally,
+          Plausible for analytics. None of them receive any URLs you submit
+          unless you publish a share link yourself.
         </p>
 
         <h2

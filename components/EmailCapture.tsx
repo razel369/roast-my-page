@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "rmp_subscribed_v1";
-const SHOW_DELAY_MS = 12_000; // don't pop instantly; let user see the result first
+const SHOW_DELAY_MS = 8_000; // don't pop instantly; let user see the result first
 
 export function EmailCapture({ score, trigger }: { score?: number; trigger: boolean }) {
   const [open, setOpen] = useState(false);
@@ -21,9 +21,11 @@ export function EmailCapture({ score, trigger }: { score?: number; trigger: bool
     } catch {
       /* ignore */
     }
-    const t = setTimeout(() => {
-      setOpen(true);
-    }, SHOW_DELAY_MS);
+    // Skip for paying users — we already have their email via Polar.sh.
+    if (typeof document !== "undefined") {
+      if (/(?:^|;\s*)rmp_pro_token=/.test(document.cookie)) return;
+    }
+    const t = setTimeout(() => setOpen(true), SHOW_DELAY_MS);
     return () => clearTimeout(t);
   }, [trigger]);
 
