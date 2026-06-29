@@ -17,6 +17,7 @@ export function Header() {
   // Close on Escape, lock body scroll, restore focus
   useEffect(() => {
     if (!open) return;
+    const button = toggleRef.current;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
@@ -26,7 +27,7 @@ export function Header() {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
-      toggleRef.current?.focus();
+      button?.focus();
     };
   }, [open]);
 
