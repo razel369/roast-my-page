@@ -378,6 +378,8 @@ export function roast(p: ParsedPage): RoastResult {
     id: makeId(),
     url: p.url,
     domain: p.domain,
+    originalH1: p.h1,
+    originalMetaDescription: p.metaDescription,
     timestamp: Date.now(),
     score,
     verdict: v,

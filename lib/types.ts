@@ -61,6 +61,8 @@ export interface RoastResult {
   id: string;
   url: string;
   domain: string;
+  originalH1?: string;
+  originalMetaDescription?: string;
   timestamp: number;
   score: number; // 0-100
   verdict: Verdict;

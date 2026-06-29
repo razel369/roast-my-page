@@ -4,6 +4,8 @@ import { Stamp } from "./Stamp";
 import { ShareButton } from "./ShareButton";
 import { FeedbackWidget } from "./FeedbackWidget";
 import { DiagnosticGrid } from "./DiagnosticGrid";
+import { HeroRewriteCard } from "./HeroRewriteCard";
+import { QuickWinsTimeline } from "./QuickWinsTimeline";
 
 interface Props {
   result: RoastResult;
@@ -132,51 +134,11 @@ export function RoastResults({ result, source }: Props) {
         </div>
       </section>
 
-      {/* ─── Section V — Quick wins ───────────────────────────────── */}
+      {/* ─── Section V — Quick wins + Hero rewrite ─────────────────── */}
       <section className="grid gap-6 sm:grid-cols-2">
-        <div className="exhibit">
-          <div className="exhibit-head">
-            <span>Quick wins</span>
-            <span>Today</span>
-          </div>
-          <ol className="exhibit-body">
-            {result.quickWins.map((w, i) => (
-              <li key={i} className="flex gap-3">
-                <span className="font-mono text-xs font-bold text-vermillion w-6 shrink-0 mt-0.5">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-ink-900">{w}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="exhibit card-lift">
-          <div className="exhibit-head">
-            <span>Proposed hero rewrite</span>
-            <span>Drop-in</span>
-          </div>
-          <div className="exhibit-body space-y-3">
-            <div>
-              <div className="filing mb-1">Headline</div>
-              <div className="border border-ink-900 bg-bone-50 px-3 py-2 font-display text-lg text-ink-900">
-                {result.heroRewrite.headline}
-              </div>
-            </div>
-            <div>
-              <div className="filing mb-1">Sub-headline</div>
-              <div className="border border-ink-900 bg-bone-50 px-3 py-2 font-body text-sm text-ink-800">
-                {result.heroRewrite.subhead}
-              </div>
-            </div>
-            <div>
-              <div className="filing mb-1">Call to action</div>
-              <div className="border border-ink-900 bg-bone-100 px-3 py-2 font-mono text-xs uppercase tracking-stamped text-ink-900">
-                {result.heroRewrite.cta}
-              </div>
-            </div>
-            <p className="text-xs text-ink-500 italic">{result.heroRewrite.rationale}</p>
-          </div>
+        <QuickWinsTimeline wins={result.quickWins} />
+        <div className="relative">
+          <HeroRewriteCard rewrite={result.heroRewrite} originalH1={result.originalH1} />
         </div>
       </section>
 
