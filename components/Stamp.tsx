@@ -1,4 +1,5 @@
 "use client";
+import { CountUp } from "./CountUp";
 
 interface StampProps {
   score: number;
@@ -61,7 +62,7 @@ export function Stamp({ score, verdict, size = "lg" }: StampProps) {
           className={`font-display ${s.score} font-bold text-bone-50 leading-none my-1`}
           style={{ fontVariationSettings: "'wght' 800, 'opsz' 144, 'SOFT' 0" }}
         >
-          {score}
+          <CountUp value={score} durationMs={1200} />
         </div>
         <div className={`font-mono ${s.label} uppercase tracking-stamped text-bone-50 font-semibold border-t border-bone-50/60 pt-1`}>
           / 100

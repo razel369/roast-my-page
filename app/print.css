@@ -1,0 +1,102 @@
+/* Print stylesheet for the shareable verdict at /r/[id] */
+/* Goal: when someone prints to PDF or paper, the document reads like a real
+   forensic filing — clean black-and-white, no decorative watermarks, no
+   share buttons, no chrome. */
+
+@media print {
+  @page {
+    margin: 0.6in 0.5in;
+  }
+  html {
+    background: white !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide non-content chrome. */
+  header,
+  nav,
+  footer.site-footer,
+  .no-print,
+  [data-no-print] {
+    display: none !important;
+  }
+
+  /* Hero stamp — flat, no shadow, no SVG filters. */
+  .animate-stamp-slam,
+  [aria-hidden="true"] {
+    /* Keep geometry but drop filters. */
+    filter: none !important;
+    animation: none !important;
+    transform: none !important;
+    color-adjust: exact;
+  }
+
+  /* Hairlines print crisply at 0.5pt. */
+  .hairline { border-top: 0.5pt solid #000 !important; height: 0 !important; }
+  .double-rule { border-top: 1pt solid #000 !important; border-bottom: 1pt solid #000 !important; height: 0 !important; background: transparent !important; }
+  .filing { font-size: 8pt; letter-spacing: 0.08em; text-transform: uppercase; color: #444 !important; }
+
+  /* Force page breaks where useful. */
+  section.document > section {
+    page-break-inside: avoid;
+    margin-top: 1.2em;
+  }
+  h1, h2, h3 { page-break-after: avoid; color: #000 !important; }
+
+  /* Exhibits — keep borders, drop backgrounds to white. */
+  .exhibit,
+  .exhibit-head,
+  .exhibit-body {
+    background: white !important;
+    color: black !important;
+    border: 0.5pt solid #000 !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+  .exhibit-head {
+    background: #000 !important;
+    color: #fff !important;
+  }
+
+  /* Score stamp — keep the impact, drop the SVG filters and color overlay. */
+  .animate-stamp-slam {
+    box-shadow: none !important;
+  }
+  .animate-stamp-slam [style*="filter"] {
+    filter: none !important;
+  }
+  .animate-stamp-slam [style*="mix-blend"],
+  .animate-stamp-slam [style*="radial-gradient"] {
+    display: none !important;
+  }
+
+  /* Links: show url in parens. */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #555;
+  }
+  a[href^="/"]::after {
+    content: "";
+  }
+
+  /* First page header via running element. */
+  main, .document { max-width: none !important; padding: 0 !important; }
+  .container-narrow, .document { width: 100% !important; max-width: none !important; padding: 0 !important; }
+
+  /* Watermark RMP — drop. */
+  .watermark { display: none !important; }
+}

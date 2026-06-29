@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { readRoastFromPath } from "@/lib/share";
 import { RoastResults } from "@/components/RoastResults";
 import type { RoastResult } from "@/lib/types";
+import "../../print.css";
 
 export default function RoastView({ params }: { params: { id: string } }) {
   const { id } = params;

@@ -8,6 +8,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { SocialProof } from "@/components/SocialProof";
 import { FinalCTA } from "@/components/FinalCTA";
 import { EmailCapture } from "@/components/EmailCapture";
+import { FaqSection, FAQ_ITEMS } from "@/components/FaqSection";
 import type { RoastResult } from "@/lib/types";
 
 export default function HomePage() {
@@ -29,6 +30,7 @@ export default function HomePage() {
           <div className="double-rule h-1 mt-8 mb-8" />
           <RoastResults result={result} source={source} />
           <EmailCapture score={result.score} trigger={true} />
+          <FaqSection items={FAQ_ITEMS} />
         </div>
       ) : (
         <>
@@ -36,6 +38,7 @@ export default function HomePage() {
           <Features />
           <HowItWorks />
           <FinalCTA />
+          <FaqSection items={FAQ_ITEMS} />
         </>
       )}
     </>

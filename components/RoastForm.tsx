@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { RoastResult } from "@/lib/types";
 import { DEMO_SEEDS } from "@/lib/seeds";
 import { roast as runAnalyzer } from "@/lib/analyzer";
@@ -13,12 +13,39 @@ export function RoastForm({ onResult }: Props) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [mode, setMode] = useState<"url" | "paste">("url");
   const [pasted, setPasted] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Cmd/Ctrl+Enter submits the form from anywhere inside it.
+  useEffect(() => {
+    const el = formRef.current;
+    if (!el) return;
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && !loading) {
+        e.preventDefault();
+        el.requestSubmit();
+      }
+    };
+    el.addEventListener("keydown", onKey);
+    return () => el.removeEventListener("keydown", onKey);
+  }, [loading]);
+
+  const runFetch = async (payload: { url?: string; text?: string }) => {
+    const res = await fetch("/api/roast", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    return { res, data };
+  };
 
   const handleRoast = async (e?: React.FormEvent) => {
     e?.preventDefault();
     setError(null);
+    setWarning(null);
 
     if (mode === "url") {
       if (!url.trim()) {
@@ -27,28 +54,24 @@ export function RoastForm({ onResult }: Props) {
       }
       setLoading(true);
       try {
-        const res = await fetch("/api/roast", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: url.trim() }),
-        });
-        const data = await res.json();
+        const { res, data } = await runFetch({ url: url.trim() });
         if (!res.ok) throw new Error(data.error || "Failed to fetch page");
         const result: RoastResult = data.result;
         saveRoast(result);
         onResult(result, data.source);
-        if (data.warning) setError(data.warning);
+        if (data.warning) setWarning(data.warning);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Failed to fetch page";
-        setError(message);
         try {
           const demo = buildRoastFromUrlGuess(url.trim());
           saveRoast(demo);
           onResult(demo, "rules");
-          setError(
-            `${message} — built a best-guess verdict from your URL. Paste your copy below for full accuracy.`,
+          setWarning(
+            `Couldn't reach that page (${message.slice(0, 80)}). Showing a best-guess verdict from your URL — paste your copy below for full accuracy.`,
           );
-        } catch {}
+        } catch {
+          setError(`${message} — and we couldn't build a guess either. Try paste mode below.`);
+        }
       } finally {
         setLoading(false);
       }
@@ -59,20 +82,17 @@ export function RoastForm({ onResult }: Props) {
       }
       setLoading(true);
       try {
-        const res = await fetch("/api/roast", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: url.trim() || "https://pasted.local", text: pasted }),
+        const { res, data } = await runFetch({
+          url: url.trim() || "https://pasted.local",
+          text: pasted,
         });
-        const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to analyze text");
         const result: RoastResult = data.result;
         saveRoast(result);
         onResult(result, data.source);
-        if (data.warning) setError(data.warning);
+        if (data.warning) setWarning(data.warning);
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Something went wrong";
-        setError(message);
+        setError(err instanceof Error ? err.message : "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -86,6 +106,8 @@ export function RoastForm({ onResult }: Props) {
     onResult(result, "rules");
   };
 
+  const isFatal = !!error;
+
   return (
     <section className="document pb-12" id="roast-form">
       <div className="exhibit card-lift">
@@ -98,15 +120,17 @@ export function RoastForm({ onResult }: Props) {
           <span className="text-ink-500">Required</span>
         </div>
 
-        <form onSubmit={handleRoast} className="animate-fade-in px-5 py-6 sm:px-7 sm:py-7 space-y-5">
+        <form ref={formRef} onSubmit={handleRoast} className="animate-fade-in px-5 py-6 sm:px-7 sm:py-7 space-y-5">
           {/* Mode tabs — improved styling */}
-          <div className="flex gap-1 bg-bone-300 p-1 border border-ink-900 w-fit">
+          <div role="tablist" aria-label="Input mode" className="flex gap-1 bg-bone-300 p-1 border border-ink-900 w-fit">
             {(["url", "paste"] as const).map((m) => (
               <button
                 key={m}
                 type="button"
+                role="tab"
+                aria-selected={mode === m}
                 onClick={() => setMode(m)}
-                className={`px-4 py-2 font-mono text-[10px] uppercase tracking-stamped font-semibold transition-all duration-200 ${
+                className={`px-4 py-2 font-mono text-[10px] uppercase tracking-stamped font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-vermillion ${
                   mode === m
                     ? "bg-vermillion text-bone-50 shadow-stamp"
                     : "bg-transparent text-ink-700 hover:text-ink-900"
@@ -156,17 +180,49 @@ export function RoastForm({ onResult }: Props) {
             </div>
           )}
 
-          {error && (
-            <div className="border-l-4 border-vermillion bg-highlight-tint px-4 py-3 font-mono text-xs text-ink-900">
-              <span className="font-bold uppercase tracking-stamped">Notice: </span>
-              {error}
+          {warning && (
+            <div
+              role="status"
+              className="border-l-4 border-ink-900 bg-bone-200 px-4 py-3 font-mono text-xs text-ink-800"
+            >
+              <span className="font-bold uppercase tracking-stamped text-ink-900">Notice: </span>
+              {warning}
+              <button
+                type="button"
+                onClick={() => setMode("paste")}
+                className="ml-2 underline decoration-vermillion decoration-2 underline-offset-2 hover:text-vermillion"
+              >
+                Switch to paste mode
+              </button>
+            </div>
+          )}
+
+          {isFatal && (
+            <div
+              role="alert"
+              className="flex items-start justify-between gap-3 border-l-4 border-vermillion bg-highlight-tint px-4 py-3 font-mono text-xs text-ink-900"
+            >
+              <div>
+                <span className="font-bold uppercase tracking-stamped">Notice: </span>
+                {error}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setError(null);
+                  setWarning(null);
+                }}
+                className="shrink-0 font-bold uppercase tracking-stamped text-vermillion hover:underline"
+              >
+                Dismiss
+              </button>
             </div>
           )}
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="submit"
-              className="btn-stamp"
+              className="btn-stamp focus:outline-none focus:ring-2 focus:ring-vermillion focus:ring-offset-2 focus:ring-offset-bone-50"
               disabled={loading}
             >
               {loading ? (
@@ -178,7 +234,10 @@ export function RoastForm({ onResult }: Props) {
                 <>Deliver verdict</>
               )}
             </button>
-            <span className="filing">~60s · No URL is stored</span>
+            <span className="filing">
+              <kbd className="hidden sm:inline-block rounded border border-ink-900 bg-bone-100 px-1.5 py-0.5 font-mono text-[9px]">⌘/Ctrl + ↵</kbd>
+              <span className="ml-2">No URL is stored</span>
+            </span>
           </div>
         </form>
 

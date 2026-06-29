@@ -15,17 +15,27 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-3 max-w-sm font-mono text-xs text-ink-700 leading-relaxed">
-              Verdicts on landing pages. No login. No newsletter. No nonsense.
+              Verdicts on landing pages. No login. No data retention. No nonsense.
             </p>
           </div>
 
-          <nav className="grid grid-cols-2 gap-x-8 gap-y-2.5 font-mono text-[11px] uppercase tracking-stamped text-ink-700 sm:grid-cols-3">
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-x-8 gap-y-2.5 font-mono text-[11px] uppercase tracking-stamped text-ink-700 sm:grid-cols-3"
+          >
             <Link href="/" className="transition-colors duration-200 hover:text-vermillion">Verdict</Link>
             <Link href="/pricing" className="transition-colors duration-200 hover:text-vermillion">Pricing</Link>
             <Link href="/history" className="transition-colors duration-200 hover:text-vermillion">Archive</Link>
             <Link href="/about" className="transition-colors duration-200 hover:text-vermillion">About</Link>
-            <a href="#" className="transition-colors duration-200 hover:text-vermillion">Privacy</a>
-            <a href="#" className="transition-colors duration-200 hover:text-vermillion">Contact</a>
+            <Link href="/privacy" className="transition-colors duration-200 hover:text-vermillion">Privacy</Link>
+            <a
+              href="https://github.com/razel369/roast-my-page/issues"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors duration-200 hover:text-vermillion"
+            >
+              Contact
+            </a>
           </nav>
 
           <div className="filing text-right">
