@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
-import { PayPalButton } from "@/components/PayPalButton";
+import { PolarCheckoutButton } from "@/components/PolarCheckoutButton";
 
 interface Plan {
   name: string;
@@ -70,8 +69,6 @@ const plans: Plan[] = [
 ];
 
 export function PricingCards() {
-  const [checkoutPlan, setCheckoutPlan] = useState<"pro" | "team" | null>(null);
-
   return (
     <>
       <div className="mt-10 grid gap-4 lg:grid-cols-3">
@@ -91,8 +88,10 @@ export function PricingCards() {
             </div>
             <div className="px-5 py-5">
               <div className="flex items-baseline gap-2">
-                <div className="font-display text-5xl font-bold text-ink-900 leading-none"
-                  style={{ fontVariationSettings: "'wght' 800, 'opsz' 144" }}>
+                <div
+                  className="font-display text-5xl font-bold text-ink-900 leading-none"
+                  style={{ fontVariationSettings: "'wght' 800, 'opsz' 144" }}
+                >
                   {p.price}
                 </div>
                 <div className="filing">{p.cadence}</div>
@@ -100,30 +99,13 @@ export function PricingCards() {
               <p className="mt-3 font-body text-sm text-ink-700">{p.blurb}</p>
 
               {p.planId ? (
-                checkoutPlan === p.planId ? (
-                  <div className="mt-4">
-                    <PayPalButton plan={p.planId} price={p.price} onSuccess={() => setCheckoutPlan(null)} />
-                    <button
-                      type="button"
-                      onClick={() => setCheckoutPlan(null)}
-                      className="mt-2 w-full text-center font-mono text-[10px] uppercase tracking-stamped text-ink-500 hover:text-ink-900 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setCheckoutPlan(p.planId!)}
-                    className="btn-stamp mt-5 inline-flex w-full justify-center"
-                  >
-                    {p.cta}
-                  </button>
-                )
+                <div className="mt-5">
+                  <PolarCheckoutButton plan={p.planId} price={p.price} />
+                </div>
               ) : (
                 <Link
                   href={p.href}
-                  className="btn-ghost-stamp mt-5 inline-flex w-full justify-center"
+                  className="btn-stamp mt-5 inline-flex w-full justify-center"
                 >
                   {p.cta}
                 </Link>
@@ -144,9 +126,9 @@ export function PricingCards() {
 
       <div className="mt-10 text-center">
         <p className="filing text-[11px]">
-          All paid plans billed monthly. Cancel anytime. Payments powered by PayPal.
+          All paid plans billed monthly. Cancel anytime. Payments powered by Polar.sh.
           <br />
-          Apple Pay available on Safari and supported iOS/macOS devices.
+          Apple Pay, Google Pay, and 30+ local payment methods supported globally.
         </p>
       </div>
     </>
