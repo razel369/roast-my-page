@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@/components/Analytics";
 import { WebAppSchema } from "@/components/WebAppSchema";
+import { PrivacyNotice } from "@/components/PrivacyNotice";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://roastmypage.com";
 
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <Analytics />
+        <PrivacyNotice />
       </body>
     </html>
   );
