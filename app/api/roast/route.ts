@@ -48,11 +48,13 @@ export async function POST(req: NextRequest) {
     }
 
     let parsed;
+    let fetchWarning: string | undefined;
     if (text && text.trim().length > 20) {
       parsed = parseFromText(text, url || "https://pasted.local");
     } else {
       try {
         parsed = await fetchAndParse(url!);
+        fetchWarning = parsed.fetchWarning;
       } catch (err) {
         const message = err instanceof Error ? err.message : "Fetch failed";
         return NextResponse.json(
@@ -66,7 +68,8 @@ export async function POST(req: NextRequest) {
       ? captureScreenshots(url)
       : Promise.resolve({ desktop: null, mobile: null, errors: [], elapsedMs: 0, backend: "disabled" });
 
-    const { result, source, warning } = await enrichRoast(parsed, await screenshotsPromise, isPro);
+    const { result, source, warning: llmWarning } = await enrichRoast(parsed, await screenshotsPromise, isPro);
+    const warning = fetchWarning || llmWarning;
 
     return NextResponse.json(
       { result, source, warning, llmEnabled: isPro && getLlmConfig().enabled, plan: isPro ? "pro" : "free" },

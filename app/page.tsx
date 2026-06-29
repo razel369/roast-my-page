@@ -10,6 +10,8 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { EmailCapture } from "@/components/EmailCapture";
 import { FaqSection, FAQ_ITEMS } from "@/components/FaqSection";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
+import { Onboarding } from "@/components/Onboarding";
+import { TierBadge } from "@/components/TierBadge";
 import type { RoastResult } from "@/lib/types";
 
 export default function HomePage() {
@@ -29,6 +31,7 @@ export default function HomePage() {
       {result ? (
         <div className="document">
           <div className="double-rule h-1 mt-8 mb-8" />
+          <TierBadge plan="free" />
           <RoastResults result={result} source={source} />
           <EmailCapture score={result.score} trigger={true} />
           <ComparisonStrip />
@@ -42,6 +45,7 @@ export default function HomePage() {
           <FinalCTA />
           <ComparisonStrip />
           <FaqSection items={FAQ_ITEMS} />
+          <Onboarding />
         </>
       )}
     </>

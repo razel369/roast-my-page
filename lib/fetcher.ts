@@ -114,10 +114,42 @@ export function parseHtml(html: string, url: string): ParsedPage {
   };
 }
 
+const TRACKING_PARAMS = [
+  /^utm_/i,
+  /^fbclid$/i,
+  /^gclid$/i,
+  /^msclkid$/i,
+  /^mc_cid$/i,
+  /^mc_eid$/i,
+  /^_ga$/i,
+  /^ref$/i,
+  /^ref_/i,
+];
+
+// Strip tracking query params before fetching — saves bytes and reduces noise.
+export function cleanUrl(raw: string): string {
+  let url = raw.trim();
+  if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+  try {
+    const u = new URL(url);
+    const params = new URLSearchParams(u.search);
+    const keys = Array.from(params.keys());
+    for (const k of keys) {
+      if (TRACKING_PARAMS.some((re) => re.test(k))) params.delete(k);
+    }
+    u.search = params.toString();
+    // Normalize trailing slash on bare hosts (avoid /index.html vs /).
+    let path = u.pathname;
+    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+    u.pathname = path;
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
 export async function fetchAndParse(url: string): Promise<ParsedPage> {
-  // Normalize URL
-  let normalized = url.trim();
-  if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
+  const normalized = cleanUrl(url);
 
   // 6s cap so we stay within Vercel Hobby's 10s function budget (fetch + analyze + LLM).
   const controller = new AbortController();
@@ -145,10 +177,44 @@ export async function fetchAndParse(url: string): Promise<ParsedPage> {
 
     const html = await res.text();
     if (html.length < 200) throw new Error("Page is too small to analyze");
-    return parseHtml(html, normalized);
+
+    const parsed = parseHtml(html, normalized);
+    return checkJsRendered(html, parsed);
   } finally {
     clearTimeout(timeout);
   }
+}
+
+// Detect pages that load their content via JavaScript (React/Vue SPAs).
+// We can't render JS on Vercel Hobby, so flag it for the form to surface.
+function checkJsRendered(html: string, parsed: ParsedPage): ParsedPage {
+  const bodyMatch = html.match(/<body[\s\S]*?>([\s\S]*?)<\/body>/i);
+  const bodyInner = (bodyMatch?.[1] || "").trim();
+  // Real text: strip scripts/styles and see what's left
+  const strippedBody = bodyInner
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<template[\s\S]*?<\/template>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const realTextLength = strippedBody.length;
+
+  const looksLikeJsApp =
+    realTextLength < 200 &&
+    parsed.wordCount < 30 &&
+    /<div[^>]*id=["'](root|app|__next|__nuxt|main)["']/i.test(html);
+
+  if (looksLikeJsApp) {
+    return {
+      ...parsed,
+      jsRendered: true,
+      fetchWarning:
+        "This page looks like a JavaScript app (React, Vue, Next.js). The bot only sees an empty shell — switch to paste mode above for a real audit.",
+    };
+  }
+
+  return parsed;
 }
 
 export function parseFromText(text: string, url: string): ParsedPage {

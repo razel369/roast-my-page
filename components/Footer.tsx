@@ -28,6 +28,7 @@ export function Footer() {
             <Link href="/vs" className="transition-colors duration-200 hover:text-vermillion">Vs.</Link>
             <Link href="/history" className="transition-colors duration-200 hover:text-vermillion">Archive</Link>
             <Link href="/about" className="transition-colors duration-200 hover:text-vermillion">About</Link>
+            <Link href="/changelog" className="transition-colors duration-200 hover:text-vermillion">Changelog</Link>
             <Link href="/privacy" className="transition-colors duration-200 hover:text-vermillion">Privacy</Link>
             <a
               href="https://github.com/razel369/roast-my-page/issues"

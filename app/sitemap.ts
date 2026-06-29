@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/vs/cro-consultant`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/changelog`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${base}/history`, lastModified: now, changeFrequency: "never", priority: 0.1 },
   ];
 }

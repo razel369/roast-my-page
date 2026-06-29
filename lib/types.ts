@@ -52,6 +52,9 @@ export interface ParsedPage {
   imageCount: number;
   hasPricing: boolean;
   hasFAQ: boolean;
+  // Fetch diagnostics
+  jsRendered?: boolean;
+  fetchWarning?: string;
 }
 
 export interface RoastResult {
