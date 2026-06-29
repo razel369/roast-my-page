@@ -1,0 +1,14 @@
+# Don't ship the Playwright Chromium binary to Vercel (would 50x the
+# deploy size and isn't usable on serverless anyway).
+node_modules/playwright-core/.local-browsers/
+node_modules/playwright/.local-browsers/
+# .next is built fresh on Vercel
+.next
+# Local env / build artifacts
+.env.local
+.env.*.local
+*.tsbuildinfo
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,52 @@
+  ▲ Next.js 14.2.15
+  - Local:        http://localhost:3001
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 26.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 46.5s (567 modules)
+ GET / 200 in 664ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 6.5s (568 modules)
+ GET /sw.js 404 in 7860ms
+ GET / 200 in 7647ms
+ ○ Compiling /manifest.webmanifest ...
+ ✓ Compiled /manifest.webmanifest in 4.6s (326 modules)
+ GET /manifest.webmanifest 200 in 5837ms
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 773ms (328 modules)
+ GET /icon.svg?3896e6a88e5b40da 200 in 2691ms
+ GET /icon 404 in 2447ms
+ GET /sw.js 404 in 184ms
+ ○ Compiling /api/roast ...
+ ✓ Compiled /api/roast in 1974ms (362 modules)
+ POST /api/roast 200 in 76975ms
+   Reload env: .env.local
+ ✓ Compiled in 3.2s (553 modules)
+ ✓ Compiled /manifest.webmanifest in 394ms (325 modules)
+ GET /manifest.webmanifest 200 in 720ms
+ ✓ Compiled /_not-found in 302ms (326 modules)
+ GET /icon 404 in 705ms
+ GET / 200 in 668ms
+ GET /manifest.webmanifest 200 in 118ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1032ms (327 modules)
+ ✓ Compiled (328 modules)
+ GET /icon.svg?3896e6a88e5b40da 200 in 1597ms
+ GET /icon 404 in 1462ms
+ ✓ Compiled /api/roast in 504ms (362 modules)
+ POST /api/roast 200 in 18511ms
+ GET /sw.js 404 in 118ms
+   Reload env: .env.local
+ ✓ Compiled in 2.2s (567 modules)
+ ○ Compiling /manifest.webmanifest ...
+ ✓ Compiled /manifest.webmanifest in 3.4s (601 modules)
+ GET /manifest.webmanifest 200 in 1307ms
+ ✓ Compiled /_not-found in 178ms (326 modules)
+ GET /icon 404 in 649ms
+ ✓ Compiled in 439ms (276 modules)
+ ✓ Compiled in 352ms (276 modules)
+ ✓ Compiled in 527ms (276 modules)
+ GET /_next/static/css/app/layout.css?v=1782748909738 404 in 60ms
+ GET /_next/static/css/app/layout.css?v=1782748909738 404 in 52ms

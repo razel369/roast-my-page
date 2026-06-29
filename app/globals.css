@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bone: #E8E5DE;
+  --ink: #0F0F0F;
+  --vermillion: #C8321C;
+  --gold: #B8942E;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  background: var(--bone);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "ss02", "tnum"; /* Plex Mono tabular nums */
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(200, 50, 28, 0.18);
+  color: var(--ink);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C9C4B5; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #9B968A; }
+
+@layer components {
+  /* Document container — single column, letter-sized proportions. */
+  .document {
+    @apply mx-auto w-full max-w-[920px] px-6 sm:px-10;
+  }
+
+  /* Filing label — used for small caps tracking markers. */
+  .filing {
+    @apply font-mono text-[10px] uppercase tracking-stamped text-ink-300;
+  }
+
+  /* Eyebrow — like a section header in a report. */
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-stamped text-ink-700;
+  }
+
+  /* Display headline — big serif. */
+  .display {
+    @apply font-display font-bold text-ink-900 leading-[0.95] tracking-[-0.02em];
+  }
+
+  /* The numbered section header — earns its keep on every section. */
+  .section-num {
+    @apply font-mono text-[11px] uppercase tracking-stamped text-ink-700;
+  }
+
+  /* Hairline rule — the lines that section the document. */
+  .hairline {
+    @apply h-px w-full bg-rule;
+  }
+
+  /* Double rule (signature element on the document). */
+  .double-rule {
+    background-image: linear-gradient(to bottom, transparent 0, transparent calc(50% - 0.5px), #0F0F0F calc(50% - 0.5px), #0F0F0F calc(50% + 0.5px), transparent calc(50% + 0.5px), transparent 100%);
+  }
+
+  /* The form "stamp field" — looks like an old typewriter input. */
+  .stamp-field {
+    @apply w-full bg-bone-50 border border-ink-700 px-4 py-3 font-mono text-sm text-ink-900 placeholder:text-ink-500 transition-colors duration-200;
+  }
+  .stamp-field:focus {
+    @apply outline-none border-vermillion bg-bone-100 shadow-inset;
+  }
+
+  /* Stamp the page background with subtle paper grain. */
+  .paper-bg {
+    background-color: var(--bone);
+    background-image:
+      radial-gradient(rgba(15,15,15,0.025) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+
+  /* Exhibit card — an "evidence" container. */
+  .exhibit {
+    @apply border border-ink-900 bg-bone-50 transition-shadow duration-300;
+  }
+  .exhibit-head {
+    @apply flex items-center justify-between gap-4 border-b border-ink-900 px-5 py-2 font-mono text-[10px] uppercase tracking-stamped;
+  }
+  .exhibit-body {
+    @apply px-5 py-4 space-y-3 text-sm text-ink-800 leading-relaxed;
+  }
+
+  /* Hoverable exhibit card */
+  .exhibit-hover {
+    @apply exhibit cursor-default;
+  }
+  .exhibit-hover:hover {
+    @apply shadow-exhibit-hover bg-bone-100;
+  }
+
+  /* Primary CTA — solid vermillion, no glow. */
+  .btn-stamp {
+    @apply inline-flex items-center justify-center gap-2 bg-vermillion text-bone-50 px-6 py-3 font-mono text-xs uppercase tracking-stamped font-semibold border border-vermillion-dark transition-all duration-200 hover:bg-vermillion-light active:translate-y-px shadow-stamp hover:shadow-stamp-lg;
+  }
+
+  .btn-ghost-stamp {
+    @apply inline-flex items-center justify-center gap-2 border border-ink-900 bg-bone text-ink-900 px-5 py-3 font-mono text-xs uppercase tracking-stamped font-semibold transition-all duration-200 hover:bg-bone-100 hover:shadow-exhibit-hover active:translate-y-px;
+  }
+
+  /* Card that lifts on hover */
+  .card-lift {
+    @apply transition-all duration-300;
+  }
+  .card-lift:hover {
+    @apply -translate-y-0.5 shadow-exhibit-hover;
+  }
+
+  /* Decorative watermark text */
+  .watermark {
+    @apply absolute select-none pointer-events-none text-ink-900/5 font-display font-black leading-none;
+  }
+}
+
+/* Accessible focus rings — visible black ring, no animation. */
+:focus-visible {
+  outline: 2px solid var(--vermillion);
+  outline-offset: 2px;
+}
+
+/* Staggered animation delay helpers */
+.delay-100 { animation-delay: 100ms !important; }
+.delay-200 { animation-delay: 200ms !important; }
+.delay-300 { animation-delay: 300ms !important; }
+.delay-400 { animation-delay: 400ms !important; }
+.delay-500 { animation-delay: 500ms !important; }
+.delay-600 { animation-delay: 600ms !important; }
+
+/* Respect reduced motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
