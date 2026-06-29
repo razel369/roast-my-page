@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { readRoastFromPath } from "@/lib/share";
 import { RoastResults } from "@/components/RoastResults";
+import { FeedbackWidget } from "@/components/FeedbackWidget";
 import type { RoastResult } from "@/lib/types";
 import "../../print.css";
 
@@ -24,20 +25,20 @@ export default function RoastView({ params }: { params: { id: string } }) {
 
   if (notFound) {
     return (
-      <div className="container-narrow py-24 text-center">
+      <div className="document py-24 text-center">
         <div className="text-5xl">🔥</div>
-        <h1 className="mt-4 text-2xl font-bold">That roast link is broken or expired.</h1>
-        <p className="mt-2 text-ink-400">Generate a fresh one — it only takes 60 seconds.</p>
-        <a href="/" className="btn-primary mt-6 inline-flex">Roast a page</a>
+        <h1 className="mt-4 display text-3xl text-ink-900">That roast link is broken or expired.</h1>
+        <p className="mt-2 font-body text-ink-700">Generate a fresh one — it only takes 60 seconds.</p>
+        <a href="/" className="btn-stamp mt-6 inline-flex">Roast a page</a>
       </div>
     );
   }
 
   if (!result) {
     return (
-      <div className="container-narrow py-24 text-center">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-ember-500 border-t-transparent" />
-        <p className="mt-3 text-sm text-ink-400">Decoding roast…</p>
+      <div className="document py-24 text-center">
+        <div className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-vermillion border-t-transparent" />
+        <p className="mt-3 font-mono text-xs uppercase tracking-stamped text-ink-500">Decoding roast…</p>
       </div>
     );
   }
@@ -45,6 +46,14 @@ export default function RoastView({ params }: { params: { id: string } }) {
   return (
     <div className="pt-8">
       <RoastResults result={result} />
+      <div className="document pb-12 no-print">
+        <FeedbackWidget
+          verdictId={result.id}
+          domain={result.domain}
+          score={result.score}
+          source="share_view"
+        />
+      </div>
     </div>
   );
 }

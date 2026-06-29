@@ -28,7 +28,7 @@ export default function PricingPage() {
       <PricingCards />
 
       <div className="mt-16 grid gap-4 sm:grid-cols-3">
-        <FAQ q="Is the free tier really unlimited?" a="Rate-limited per IP (8/min) so we do not get crushed by bots. Real humans hit the limit once a day, max." />
+        <FAQ q="Is the free tier really unlimited?" a="No — rate-limited per IP (3/day on free, 8/min on Pro) so we don't get crushed by bots. Real humans hit the limit only when they're stress-testing." />
         <FAQ q="Can I cancel Pro anytime?" a="Yes. No contracts, no retention team, no are you sure popups." />
         <FAQ q="Do you store my URL or page content?" a="Free verdicts are not stored on our servers. Pro archive is stored in your private cloud workspace." />
       </div>

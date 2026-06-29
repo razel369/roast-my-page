@@ -2,6 +2,7 @@
 import type { RoastResult } from "@/lib/types";
 import { Stamp } from "./Stamp";
 import { ShareButton } from "./ShareButton";
+import { FeedbackWidget } from "./FeedbackWidget";
 
 interface Props {
   result: RoastResult;
@@ -273,6 +274,14 @@ export function RoastResults({ result, source }: Props) {
           <div className="filing">
             End of file · {filingId}
           </div>
+        </div>
+        <div className="mt-8">
+          <FeedbackWidget
+            verdictId={result.id}
+            domain={result.domain}
+            score={result.score}
+            source="results_inline"
+          />
         </div>
       </footer>
     </section>

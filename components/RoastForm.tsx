@@ -18,6 +18,14 @@ export function RoastForm({ onResult }: Props) {
   const [pasted, setPasted] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
+  // Read ?url= query param once on mount (Hero "Try it on {host}" CTA).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const incoming = params.get("url");
+    if (incoming) setUrl(incoming);
+  }, []);
+
   // Cmd/Ctrl+Enter submits the form from anywhere inside it.
   useEffect(() => {
     const el = formRef.current;

@@ -1,4 +1,24 @@
+"use client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 export function Hero() {
+  // Detect the visitor's own domain so they can one-click roast this site.
+  // Suppressed on localhost (dev) and on roastmypage.com itself.
+  const [selfUrl, setSelfUrl] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const host = window.location.hostname;
+    if (!host) return;
+    if (host === "localhost" || host === "127.0.0.1") return;
+    if (host.endsWith("roastmypage.com") || host.endsWith(".vercel.app")) {
+      // Demo affordance: still link to demo seed.
+      setSelfUrl(null);
+      return;
+    }
+    setSelfUrl(`https://${host}`);
+  }, []);
+
   return (
     <section className="document pt-16 pb-10 sm:pt-28 relative">
       {/* Decorative watermark */}
@@ -30,6 +50,22 @@ export function Hero() {
             killing your conversion — with the rewrite dropped in.
             Free, no signup.
           </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#roast-form" className="btn-stamp inline-flex">
+              Deliver verdict
+            </a>
+            {selfUrl && (
+              <Link
+                href={`/?url=${encodeURIComponent(selfUrl)}#roast-form`}
+                className="btn-ghost-stamp inline-flex"
+                title={`Roast ${new URL(selfUrl).hostname}`}
+              >
+                <span className="text-vermillion font-bold">↻</span>
+                <span>Try it on <span className="font-semibold">{new URL(selfUrl).hostname}</span></span>
+              </Link>
+            )}
+          </div>
 
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-x-8">
             {[
