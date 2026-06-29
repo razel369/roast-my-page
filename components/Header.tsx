@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ProHeaderIndicator } from "./ProHeaderIndicator";
 
 export function Header() {
   const pathname = usePathname();
@@ -82,6 +83,7 @@ export function Header() {
               </Link>
             );
           })}
+          <ProHeaderIndicator />
         </nav>
 
         <button

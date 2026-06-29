@@ -12,6 +12,7 @@
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { ManageSubscriptionButton } from "@/components/ManageSubscriptionButton";
 
 function WelcomeInner() {
   const params = useSearchParams();
@@ -160,9 +161,11 @@ function WelcomeInner() {
           Need to manage billing, invoices, or cancel?
         </p>
         <p className="mt-2 font-body text-sm text-ink-700">
-          Polar handles all of it from their customer portal. Email us and we&apos;ll
-          send your direct link.
+          Polar handles all of it from their customer portal — update card, view invoices, cancel anytime.
         </p>
+        <div className="mt-4">
+          <ManageSubscriptionButton />
+        </div>
       </div>
 
       {checkoutId && (

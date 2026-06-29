@@ -12,6 +12,7 @@ import { FaqSection, FAQ_ITEMS } from "@/components/FaqSection";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { Onboarding } from "@/components/Onboarding";
 import { TierBadge } from "@/components/TierBadge";
+import { ProFeaturesTeaser } from "@/components/ProFeaturesTeaser";
 import type { RoastResult } from "@/lib/types";
 
 export default function HomePage() {
@@ -34,6 +35,7 @@ export default function HomePage() {
           <TierBadge plan="free" />
           <RoastResults result={result} source={source} />
           <EmailCapture score={result.score} trigger={true} />
+          <ProFeaturesTeaser />
           <ComparisonStrip />
           <FaqSection items={FAQ_ITEMS} />
         </div>
@@ -43,6 +45,7 @@ export default function HomePage() {
           <Features />
           <HowItWorks />
           <FinalCTA />
+          <ProFeaturesTeaser />
           <ComparisonStrip />
           <FaqSection items={FAQ_ITEMS} />
           <Onboarding />
