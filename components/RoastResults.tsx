@@ -6,6 +6,8 @@ import { FeedbackWidget } from "./FeedbackWidget";
 import { DiagnosticGrid } from "./DiagnosticGrid";
 import { HeroRewriteCard } from "./HeroRewriteCard";
 import { QuickWinsTimeline } from "./QuickWinsTimeline";
+import { TrustAudit } from "./TrustAudit";
+import { ActionPlanChecklist } from "./ActionPlanChecklist";
 
 interface Props {
   result: RoastResult;
@@ -142,52 +144,17 @@ export function RoastResults({ result, source }: Props) {
         </div>
       </section>
 
-      {/* ─── Section VI — Trust + Objections ──────────────────────── */}
-      <section className="grid gap-6 sm:grid-cols-2">
-        <div className="exhibit card-lift">
-          <div className="exhibit-head">
-            <span>Trust signals</span>
-            <span>Score {result.trustAnalysis.score}/100</span>
-          </div>
-          <div className="exhibit-body space-y-3">
-            <ListGroup label="On record" items={result.trustAnalysis.signals} accent="text-vermillion" />
-            <ListGroup label="Missing from the record" items={result.trustAnalysis.missing} accent="text-ink-500 line-through" />
-          </div>
-        </div>
-
-        <div className="exhibit card-lift">
-          <div className="exhibit-head">
-            <span>Objections covered</span>
-            <span>What buyers worry about</span>
-          </div>
-          <div className="exhibit-body grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <ListGroup label="Addressed" items={result.objectionMap.handled} accent="text-vermillion" />
-            <ListGroup label="Not addressed" items={result.objectionMap.missing} accent="text-ink-500 line-through" />
-          </div>
-        </div>
+      {/* ─── Section VI — Trust + Objections (consolidated audit) ──── */}
+      <section>
+        <TrustAudit
+          trust={result.trustAnalysis}
+          objections={result.objectionMap}
+        />
       </section>
 
-      {/* ─── Section VII — One-hour plan ──────────────────────────── */}
+      {/* ─── Section VII — One-hour plan (interactive checklist) ──── */}
       <section>
-        <SectionHeader
-          num={result.visualCritique?.enabled ? "VII" : "VI"}
-          title="One-hour action plan"
-          subtitle="Time-boxed. Prioritized. Ship by lunch."
-        />
-        <ol className="mt-6 space-y-2">
-          {result.oneHourPlan.map((step, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-4 border border-ink-900 bg-bone-50 px-4 py-3 card-lift animate-fade-in"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              <span className="font-mono text-[11px] uppercase tracking-stamped text-vermillion font-bold w-12 shrink-0">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="font-body text-sm text-ink-900 leading-relaxed">{step}</span>
-            </li>
-          ))}
-        </ol>
+        <ActionPlanChecklist steps={result.oneHourPlan} verdictId={result.id} />
       </section>
 
       {/* ─── Footer of the document ───────────────────────────────── */}
@@ -300,34 +267,6 @@ function NotesList({ label, notes }: { label: string; notes: string[] }) {
           <p className="font-mono text-xs text-ink-500">No notes filed.</p>
         )}
       </div>
-    </div>
-  );
-}
-
-function ListGroup({
-  label,
-  items,
-  accent,
-}: {
-  label: string;
-  items: string[];
-  accent: string;
-}) {
-  return (
-    <div>
-      <div className="filing mb-2">{label}</div>
-      {items.length > 0 ? (
-        <ul className="space-y-1.5 text-sm text-ink-900">
-          {items.map((s, i) => (
-            <li key={i} className="flex gap-2">
-              <span className={`${accent} font-bold shrink-0`}>{accent.includes("line-through") ? "✕" : "✓"}</span>
-              <span>{s}</span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="font-mono text-xs text-ink-500">None.</p>
-      )}
     </div>
   );
 }
