@@ -46,6 +46,12 @@ export async function captureScreenshots(rawUrl: string): Promise<ScreenshotCapt
     return captureViaBrowserless(normalized, started);
   }
 
+  // On serverless platforms (Vercel, Netlify, etc.) Chromium is not available,
+  // so Playwright will fail. Skip gracefully instead of hanging.
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    return { desktop: null, mobile: null, errors: ["no-browserless"], elapsedMs: 0, backend: "disabled" };
+  }
+
   // Fall back to local Playwright (dev / self-hosted).
   return captureViaPlaywright(normalized, started);
 }
@@ -223,5 +229,6 @@ async function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise
 export function captureBackend(): "playwright" | "browserless" | "disabled" {
   if (screenshotsDisabled()) return "disabled";
   if (browserlessConfigured()) return "browserless";
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) return "disabled";
   return "playwright";
 }

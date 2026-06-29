@@ -3,6 +3,32 @@ import { useState } from "react";
 import type { RoastResult } from "@/lib/types";
 import { buildShareUrl } from "@/lib/share";
 
+function verdictEmoji(v: string): string {
+  switch (v) {
+    case "Conversion Killer":
+      return "🔥";
+    case "Needs Work":
+      return "🩹";
+    case "Solid":
+      return "👍";
+    case "Strong":
+      return "🏆";
+    default:
+      return "📄";
+  }
+}
+
+function pickTweetQuote(result: RoastResult): string {
+  // Pick the most severe killer for a punchy quote.
+  const sevOrder = { critical: 0, high: 1, medium: 2 } as const;
+  const top = [...result.killers].sort((a, b) => sevOrder[a.severity] - sevOrder[b.severity])[0];
+  if (top) {
+    const trimmed = top.title.length > 60 ? top.title.slice(0, 57) + "…" : top.title;
+    return `The #1 thing killing my conversion: "${trimmed}"`;
+  }
+  return "Brutally honest landing page teardown in 60 seconds.";
+}
+
 export function ShareButton({ result }: { result: RoastResult }) {
   const [copied, setCopied] = useState(false);
 
@@ -24,9 +50,14 @@ export function ShareButton({ result }: { result: RoastResult }) {
     }
   };
 
-  const tweetText = `My landing page scored ${result.score}/100 on Roast My Page — "${result.verdictLabel}". The teardown:`;
+  const emoji = verdictEmoji(result.verdictLabel);
+  const quote = pickTweetQuote(result);
+  const tweetText = `${emoji} My landing page scored ${result.score}/100 — verdict: "${result.verdictLabel}".\n\n${quote}\n\nFree audit:`;
   const tweetUrl = buildShareUrl(result);
   const tweetIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(tweetUrl)}`;
+
+  const linkedinIntent = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(tweetUrl)}`;
+  const redditIntent = `https://www.reddit.com/submit?url=${encodeURIComponent(tweetUrl)}&title=${encodeURIComponent(`${emoji} ${result.score}/100 — Roast My Page verdict`)}`;
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -53,8 +84,26 @@ export function ShareButton({ result }: { result: RoastResult }) {
         rel="noreferrer"
         className="btn-ghost-stamp group"
       >
-        <span className="text-ink-500 group-hover:text-ink-900 transition-colors">✕</span>
-        <span>Post to X</span>
+        <span className="text-ink-500 group-hover:text-ink-900 transition-colors">𝕏</span>
+        <span>Share on X</span>
+      </a>
+      <a
+        href={linkedinIntent}
+        target="_blank"
+        rel="noreferrer"
+        className="btn-ghost-stamp group"
+      >
+        <span className="text-ink-500 group-hover:text-ink-900 transition-colors">in</span>
+        <span>LinkedIn</span>
+      </a>
+      <a
+        href={redditIntent}
+        target="_blank"
+        rel="noreferrer"
+        className="btn-ghost-stamp group hidden sm:inline-flex"
+      >
+        <span className="text-ink-500 group-hover:text-ink-900 transition-colors">r/</span>
+        <span>Reddit</span>
       </a>
     </div>
   );

@@ -11,7 +11,7 @@ export function Hero() {
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-vermillion animate-pulse-subtle" />
           RM-2026-A
         </span>
-        <span>Public · 60s · No signup</span>
+        <span>Public · ~60s · No signup</span>
       </div>
       <div className="mt-6 double-rule h-1" />
 
@@ -19,21 +19,22 @@ export function Hero() {
         <div className="animate-fade-in-up">
           <div className="filing mb-4">Case No. RM-2026-001</div>
           <h1
-            className="display text-[88px] leading-[0.88] sm:text-[120px] sm:leading-[0.88]"
+            className="display text-[56px] leading-[0.92] sm:text-[88px] sm:leading-[0.9]"
             style={{ fontVariationSettings: "'wght' 700, 'opsz' 144, 'SOFT' 0, 'WONK' 0" }}
           >
-            Verdict.
+            A verdict on your landing page in 60 seconds.
           </h1>
           <div className="mt-2 h-1 w-24 bg-vermillion animate-draw-line origin-left" />
           <p className="mt-6 max-w-xl font-body text-base text-ink-700 leading-relaxed sm:text-lg">
-            Drop a URL. Get told exactly what is broken, why it costs you money, and how to fix it.
-            Ship the changes before lunch.
+            Paste your URL. Get a brutal, specific audit of the 5 things
+            killing your conversion — with the rewrite dropped in.
+            Free, no signup.
           </p>
 
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-x-8">
             {[
-              "A score from 0 to 100. Brutal.",
-              "The 5 specific things killing conversion.",
+              "A score from 0 to 100, with reasons.",
+              "5 conversion killers, ranked by severity.",
               "A rewritten hero you can paste in today.",
               "A one-hour action plan, time-boxed.",
             ].map((line, i) => (

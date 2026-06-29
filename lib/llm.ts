@@ -86,8 +86,9 @@ export async function chatComplete(
     temperature: opts.temperature ?? 0.7,
   };
 
+  // Hard cap to fit inside Vercel Hobby's 10s function budget alongside fetch + analysis.
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30_000);
+  const timeout = setTimeout(() => controller.abort(), 6_000);
   const signal = opts.signal ?? controller.signal;
 
   try {

@@ -4,11 +4,11 @@
   "regions": ["fra1"],
   "functions": {
     "app/api/roast/route.ts": {
-      "maxDuration": 60,
+      "maxDuration": 10,
       "memory": 1024
     },
     "app/r/[id]/opengraph-image.tsx": {
-      "maxDuration": 30
+      "maxDuration": 10
     }
   },
   "crons": [],

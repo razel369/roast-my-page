@@ -119,8 +119,9 @@ export async function fetchAndParse(url: string): Promise<ParsedPage> {
   let normalized = url.trim();
   if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
 
+  // 6s cap so we stay within Vercel Hobby's 10s function budget (fetch + analyze + LLM).
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 12_000);
+  const timeout = setTimeout(() => controller.abort(), 6_000);
 
   try {
     const res = await fetch(normalized, {
