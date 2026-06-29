@@ -3,17 +3,12 @@ import type { RoastResult } from "@/lib/types";
 import { Stamp } from "./Stamp";
 import { ShareButton } from "./ShareButton";
 import { FeedbackWidget } from "./FeedbackWidget";
+import { DiagnosticGrid } from "./DiagnosticGrid";
 
 interface Props {
   result: RoastResult;
   source?: "llm" | "rules";
 }
-
-const SEVERITY_LABEL: Record<string, string> = {
-  critical: "Critical",
-  high: "High",
-  medium: "Medium",
-};
 
 export function RoastResults({ result, source }: Props) {
   const filingId = `RM-${new Date(result.timestamp).getFullYear()}-${String(result.timestamp).slice(-4)}`;
@@ -116,51 +111,23 @@ export function RoastResults({ result, source }: Props) {
         </section>
       )}
 
-      {/* ─── Section IV — Exhibits (killers) ──────────────────────── */}
+      {/* ─── Section IV — Diagnosis (categorized, visual) ─────────── */}
       <section>
         <SectionHeader
           num={result.visualCritique?.enabled ? "IV" : "III"}
-          title="Exhibits"
-          subtitle="Specific issues pulled from your page, ranked by severity. Each comes with evidence and a fix."
+          title="Diagnosis"
+          subtitle="9 conversion-killer categories. Click a tile to see the underlying issues with evidence and fix."
         />
-        <div className="mt-6 space-y-4">
-          {result.killers.map((k, i) => (
-            <article key={i} className="exhibit card-lift animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
-              <div
-                className={`exhibit-head ${
-                  k.severity === "critical"
-                    ? "bg-vermillion text-bone-50 border-vermillion-dark"
-                    : k.severity === "high"
-                      ? "bg-highlight text-ink-900"
-                      : "bg-bone-200"
-                }`}
-              >
-                <span className="flex items-center gap-3">
-                  <span className="font-mono font-bold">EX. {String(i + 1).padStart(2, "0")}</span>
-                  <span>{k.title}</span>
-                </span>
-                <span className={`font-mono text-[9px] uppercase tracking-stamped font-semibold ${
-                  k.severity === "critical" ? "" : "text-ink-900/70"
-                }`}>
-                  {SEVERITY_LABEL[k.severity] ?? k.severity}
-                </span>
-              </div>
-              <div className="exhibit-body">
-                <div>
-                  <div className="filing mb-1">Evidence</div>
-                  <p className="text-ink-800">{k.evidence}</p>
-                </div>
-                <div>
-                  <div className="filing mb-1 text-vermillion">Fix</div>
-                  <p className="text-ink-900">{k.fix}</p>
-                </div>
-              </div>
-            </article>
-          ))}
-          {result.killers.length === 0 && (
-            <div className="exhibit p-6 font-mono text-sm text-ink-700">
+        <div className="mt-6">
+          {result.killers.length === 0 ? (
+            <div className="border border-ink-900 bg-bone-100 p-6 font-body text-sm text-ink-700">
               No issues filed. You are in the top quartile. Test, do not guess.
             </div>
+          ) : (
+            <DiagnosticGrid
+              killers={result.killers}
+              heroRewriteHeadline={result.heroRewrite.headline}
+            />
           )}
         </div>
       </section>
