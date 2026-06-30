@@ -54,7 +54,7 @@ export function ShareButton({ result }: { result: RoastResult }) {
   const quote = pickTweetQuote(result);
   const tweetText = `${emoji} My landing page scored ${result.score}/100 — verdict: "${result.verdictLabel}".\n\n${quote}\n\nFree audit:`;
   const tweetUrl = buildShareUrl(result);
-  const tweetIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(tweetUrl)}`;
+  const tweetIntent = `https://x.com/intent/post?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(tweetUrl)}`;
 
   const linkedinIntent = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(tweetUrl)}`;
   const redditIntent = `https://www.reddit.com/submit?url=${encodeURIComponent(tweetUrl)}&title=${encodeURIComponent(`${emoji} ${result.score}/100 — Roast My Page verdict`)}`;

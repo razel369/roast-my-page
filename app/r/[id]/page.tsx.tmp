@@ -17,7 +17,7 @@ export default function RoastView({ params }: { params: { id: string } }) {
     if (r) {
       setResult(r);
       if (typeof document !== "undefined") {
-        document.title = `Roast of ${r.domain}: ${r.score}/100 (${r.verdictLabel}) -- Roast My Page`;
+        document.title = `Roast of ${r.domain}: ${r.score}/100 (${r.verdictLabel}) — Roast My Page`;
       }
     } else {
       setNotFound(true);
@@ -29,7 +29,7 @@ export default function RoastView({ params }: { params: { id: string } }) {
       <div className="document py-24 text-center">
         <div className="text-5xl">🔥</div>
         <h1 className="mt-4 display text-3xl text-ink-900">That roast link is broken or expired.</h1>
-        <p className="mt-2 font-body text-ink-700">Generate a fresh one -- it only takes 60 seconds.</p>
+        <p className="mt-2 font-body text-ink-700">Generate a fresh one — it only takes 60 seconds.</p>
         <a href="/" className="btn-stamp mt-6 inline-flex">Roast a page</a>
       </div>
     );

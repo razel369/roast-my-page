@@ -2,42 +2,52 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface LockedFeature {
+interface Feature {
   badge: string;
   title: string;
   body: string;
+  status: "shipped" | "soon";
 }
 
-const LOCKED: LockedFeature[] = [
+const SHIPPED: Feature[] = [
   {
-    badge: "🔓",
+    badge: "1",
     title: "Unlimited verdicts",
-    body: "Rate-limited on free, unlimited daily roasts on Pro. Audit before every product launch.",
+    body: "Rate-limited on free (3/day). Pro removes the cap so you can audit before every launch.",
+    status: "shipped",
   },
   {
-    badge: "🔓",
+    badge: "2",
     title: "AI-enriched critique",
-    body: "MiniMax M3 reviews your copy alongside the rule engine. Catches the nuance humans usually miss.",
+    body: "A language model reviews your copy alongside the rule engine. Catches nuance the patterns miss. Requires an LLM API key.",
+    status: "shipped",
   },
   {
-    badge: "🔓",
+    badge: "3",
     title: "Visual layout audit",
-    body: "We render the page in a real browser and audit the actual layout, not just the copy.",
+    body: "We render the page in a real browser and audit the layout, not just the copy. Requires a Browserless API key.",
+    status: "shipped",
   },
+];
+
+const COMING_SOON: Feature[] = [
   {
-    badge: "🔓",
+    badge: "4",
     title: "Before/after diff generator",
-    body: "Run a verdict, ship the changes, re-run — see what you actually moved.",
+    body: "Run a verdict, ship the changes, re-run. See what you actually moved.",
+    status: "soon",
   },
   {
-    badge: "🔓",
+    badge: "5",
     title: "Cloud archive across devices",
-    body: "Every roast saved to your private workspace, accessible on any browser you're signed in on.",
+    body: "Every roast saved to your private workspace, accessible on any browser you sign in on.",
+    status: "soon",
   },
   {
-    badge: "🔓",
+    badge: "6",
     title: "PDF export + email to team",
     body: "Send the verdict to your designer, your dev, your cofounder. One click.",
+    status: "soon",
   },
 ];
 
@@ -65,10 +75,7 @@ export function ProFeaturesTeaser() {
             <Link href="/" className="btn-stamp inline-flex">
               Run a verdict
             </Link>
-            <Link
-              href="/welcome"
-              className="btn-ghost-stamp inline-flex"
-            >
+            <Link href="/welcome" className="btn-ghost-stamp inline-flex">
               View Pro token
             </Link>
           </div>
@@ -95,7 +102,7 @@ export function ProFeaturesTeaser() {
       </header>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {LOCKED.map((f, i) => (
+        {SHIPPED.map((f, i) => (
           <article
             key={f.title}
             className="exhibit relative animate-fade-in border-vermillion/40 bg-bone-50/80"
@@ -109,6 +116,27 @@ export function ProFeaturesTeaser() {
               <span className="text-ink-900">{f.title}</span>
             </div>
             <div className="exhibit-body font-body text-sm text-ink-800 leading-relaxed">
+              {f.body}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {COMING_SOON.map((f, i) => (
+          <article
+            key={f.title}
+            className="exhibit relative animate-fade-in border-ink-900/30 bg-bone-100/60 opacity-70"
+            style={{ animationDelay: `${(i + SHIPPED.length) * 80}ms` }}
+          >
+            <div className="absolute right-3 top-3 z-10 grid place-items-center border border-ink-900 bg-bone-50 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-stamped text-ink-700">
+              Soon
+            </div>
+            <div className="exhibit-head bg-bone-200">
+              <span className="font-mono text-xs font-bold text-ink-500">{f.badge}</span>
+              <span className="text-ink-700">{f.title}</span>
+            </div>
+            <div className="exhibit-body font-body text-sm text-ink-700 leading-relaxed">
               {f.body}
             </div>
           </article>
