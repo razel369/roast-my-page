@@ -22,17 +22,55 @@ interface Props {
 export function DiagnosticGrid({ killers }: Props) {
   const grouped = categorizeKillers(killers);
   const [expanded, setExpanded] = useState<Category | null>(null);
+  const [filter, setFilter] = useState<"all" | "critical">("all");
+
+  // Counts for the filter chips
+  const criticalCount = killers.filter((k) => k.severity === "critical").length;
+  const visibleGrouped = filter === "critical" ? filterToCritical(grouped) : grouped;
+  const visibleKillerCount = killers.filter(
+    (k) => filter === "all" || k.severity === "critical",
+  ).length;
 
   return (
     <div>
+      {/* Filter chips */}
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <div role="tablist" aria-label="Severity filter" className="inline-flex border border-ink-900 bg-bone-100">
+          {(["all", "critical"] as const).map((f) => (
+            <button
+              key={f}
+              role="tab"
+              type="button"
+              aria-selected={filter === f}
+              onClick={() => {
+                setFilter(f);
+                setExpanded(null);
+              }}
+              className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-stamped transition-colors ${
+                filter === f
+                  ? "bg-ink-900 text-bone-50"
+                  : "bg-transparent text-ink-700 hover:text-ink-900"
+              }`}
+            >
+              {f === "all" ? "All issues" : `Critical only${criticalCount > 0 ? ` · ${criticalCount}` : ""}`}
+            </button>
+          ))}
+        </div>
+        <div className="font-mono text-[10px] uppercase tracking-stamped text-ink-500">
+          {visibleKillerCount} shown
+        </div>
+      </div>
+
       {/* Diagnostic tiles */}
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {CATEGORY_ORDER.map((cat) => {
-          const list = grouped.get(cat);
+          const list = visibleGrouped.get(cat);
           const status: CategoryStatus = statusForCategory(list);
           const meta = CATEGORY_META[cat];
           const color = STATUS_COLOR[status];
           const isOpen = expanded === cat;
+          const hasContent = list && list.length > 0;
+          const isDim = filter === "critical" && !hasContent;
 
           return (
             <button
@@ -40,17 +78,16 @@ export function DiagnosticGrid({ killers }: Props) {
               type="button"
               onClick={() => setExpanded(isOpen ? null : cat)}
               aria-pressed={isOpen}
-              className={`group relative flex flex-col items-stretch border border-ink-900 bg-bone-50 px-3 py-3 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-exhibit-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-vermillion ${
-                isOpen ? "-translate-y-0.5 shadow-exhibit-hover" : ""
-              }`}
+              className={`group relative flex flex-col items-stretch border bg-bone-50 px-3 py-3 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-exhibit-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-vermillion ${
+                isOpen ? "-translate-y-0.5 shadow-exhibit-hover border-ink-900" : "border-ink-900"
+              } ${isDim ? "opacity-30 hover:opacity-60" : ""}`}
+              disabled={isDim && !isOpen}
             >
-              {/* Status bar at the top */}
               <div
                 className="absolute inset-x-0 top-0 h-1"
                 style={{ background: color.bar }}
                 aria-hidden
               />
-              {/* Roman + icon */}
               <div className="mt-1 flex items-baseline justify-between">
                 <span className="font-mono text-[9px] uppercase tracking-stamped text-ink-500">
                   § {meta.roman}
@@ -69,10 +106,11 @@ export function DiagnosticGrid({ killers }: Props) {
                   aria-hidden
                 />
                 <span className="font-mono text-[9px] uppercase tracking-stamped" style={{ color: color.text }}>
-                  {list && list.length > 0 ? `${list.length} ${list.length === 1 ? "issue" : "issues"}` : STATUS_LABEL[status]}
+                  {hasContent
+                    ? `${list.length} ${list.length === 1 ? "issue" : "issues"}`
+                    : STATUS_LABEL[status]}
                 </span>
               </div>
-              {/* Tooltip on hover: category description */}
               <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 hidden -translate-x-1/2 whitespace-nowrap border border-ink-900 bg-ink-900 px-2 py-1 font-mono text-[9px] uppercase tracking-stamped text-bone-50 shadow-lg group-hover:block">
                 {meta.desc}
               </span>
@@ -81,18 +119,34 @@ export function DiagnosticGrid({ killers }: Props) {
         })}
       </div>
 
-      {/* Expanded category — issues for that category */}
-      {expanded && grouped.has(expanded) && (
+      {filter === "critical" && criticalCount === 0 && (
+        <div className="mt-6 border border-vermillion bg-highlight-tint p-4 text-center font-body text-sm text-ink-900">
+          ✓ No critical issues. Your copy fundamentals are sound.
+        </div>
+      )}
+
+      {expanded && visibleGrouped.has(expanded) && (
         <div className="mt-6 animate-fade-in">
           <CategoryDetail
             category={expanded}
-            killers={grouped.get(expanded) ?? []}
+            killers={visibleGrouped.get(expanded) ?? []}
             onClose={() => setExpanded(null)}
           />
         </div>
       )}
     </div>
   );
+}
+
+function filterToCritical<T extends { severity: "critical" | "high" | "medium" }>(
+  grouped: Map<Category, T[]>,
+): Map<Category, T[]> {
+  const out = new Map<Category, T[]>();
+  for (const [cat, list] of grouped) {
+    const filtered = list.filter((k) => k.severity === "critical");
+    if (filtered.length > 0) out.set(cat, filtered);
+  }
+  return out;
 }
 
 function CategoryDetail({

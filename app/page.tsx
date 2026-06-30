@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { RoastForm } from "@/components/RoastForm";
 import { RoastResults } from "@/components/RoastResults";
@@ -13,11 +13,17 @@ import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { Onboarding } from "@/components/Onboarding";
 import { TierBadge } from "@/components/TierBadge";
 import { ProFeaturesTeaser } from "@/components/ProFeaturesTeaser";
+import { RoastLoader } from "@/components/RoastLoader";
 import type { RoastResult } from "@/lib/types";
 
 export default function HomePage() {
   const [result, setResult] = useState<RoastResult | null>(null);
   const [source, setSource] = useState<"llm" | "rules">("rules");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const onLoadingChange = useCallback((v: boolean) => setLoading(v), []);
+  const onErrorChange = useCallback((e: string | null) => setError(e), []);
 
   return (
     <>
@@ -27,7 +33,13 @@ export default function HomePage() {
           setResult(r);
           if (s) setSource(s);
         }}
+        onLoadingChange={onLoadingChange}
+        onErrorChange={onErrorChange}
       />
+
+      {loading && !result && (
+        <RoastLoader loading={loading} result={null} error={null} />
+      )}
 
       {result ? (
         <div className="document">

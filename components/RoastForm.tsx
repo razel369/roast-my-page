@@ -7,9 +7,11 @@ import { saveRoast } from "@/lib/storage";
 
 interface Props {
   onResult: (r: RoastResult, source?: "llm" | "rules") => void;
+  onLoadingChange?: (loading: boolean) => void;
+  onErrorChange?: (error: string | null) => void;
 }
 
-export function RoastForm({ onResult }: Props) {
+export function RoastForm({ onResult, onLoadingChange, onErrorChange }: Props) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,6 +19,14 @@ export function RoastForm({ onResult }: Props) {
   const [mode, setMode] = useState<"url" | "paste">("url");
   const [pasted, setPasted] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    onLoadingChange?.(loading);
+  }, [loading, onLoadingChange]);
+
+  useEffect(() => {
+    onErrorChange?.(error);
+  }, [error, onErrorChange]);
 
   // Read ?url= query param once on mount (Hero "Try it on {host}" CTA).
   useEffect(() => {
