@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "rmp_subscribed_v1";
-const SHOW_DELAY_MS = 8_000; // don't pop instantly; let user see the result first
+const MAX_WAIT_MS = 30_000; // don't pop instantly; let user see the result first
 
 export function EmailCapture({ score, trigger }: { score?: number; trigger: boolean }) {
   const [open, setOpen] = useState(false);
@@ -25,8 +25,33 @@ export function EmailCapture({ score, trigger }: { score?: number; trigger: bool
     if (typeof document !== "undefined") {
       if (/(?:^|;\s*)rmp_pro_token=/.test(document.cookie)) return;
     }
-    const t = setTimeout(() => setOpen(true), SHOW_DELAY_MS);
-    return () => clearTimeout(t);
+
+    let opened = false;
+    const show = () => {
+      if (opened) return;
+      opened = true;
+      setOpen(true);
+    };
+
+    // Trigger 1: user has scrolled past 70% of the document (or 70% of viewport scroll).
+    const onScroll = () => {
+      if (typeof window === "undefined") return;
+      const doc = document.documentElement;
+      const scrollable = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pct = window.scrollY / scrollable;
+      if (pct >= 0.7) show();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Trigger 2: max-wait fallback so the modal still shows for users who
+    // never scroll but stay on the page (read every section above the fold).
+    const t = setTimeout(show, MAX_WAIT_MS);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(t);
+    };
   }, [trigger]);
 
   const dismiss = () => {

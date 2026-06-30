@@ -13,13 +13,13 @@ export const DEMO_SEEDS: DemoSeed[] = [
   {
     label: "Generic SaaS",
     band: "killer",
-    description: "Welcome-page syndrome â€” vague copy, weak CTAs, no proof.",
+    description: "Welcome-page syndrome — vague copy, weak CTAs, no proof.",
     page: {
       url: "https://demo.example.com",
       domain: "demo.example.com",
-      title: "Welcome to Acme â€” The Best Solution",
+      title: "Welcome to Acme — The Best Solution",
       metaDescription: "",
-      h1: "Welcome to Acme â€” The Best All-in-One Solution for Everyone",
+      h1: "Welcome to Acme — The Best All-in-One Solution for Everyone",
       h2s: ["Features", "About"],
       bodyText:
         "Our revolutionary platform is the next-generation solution that helps businesses unlock their full potential. " +
@@ -39,11 +39,11 @@ export const DEMO_SEEDS: DemoSeed[] = [
   {
     label: "Indie hacker (decent)",
     band: "needs-work",
-    description: "Real numbers and a real CTA â€” but thin on trust.",
+    description: "Real numbers and a real CTA — but thin on trust.",
     page: {
       url: "https://indie.example.com",
       domain: "indie.example.com",
-      title: "Starter â€” Ship faster",
+      title: "Starter — Ship faster",
       metaDescription: "Starter helps indie hackers launch landing pages in 60 seconds.",
       h1: "Ship your landing page in 60 seconds",
       h2s: ["Why Starter", "Pricing"],
@@ -69,15 +69,15 @@ export const DEMO_SEEDS: DemoSeed[] = [
     page: {
       url: "https://b2b.example.com",
       domain: "b2b.example.com",
-      title: "Pipeline â€” Revenue intelligence for B2B teams",
-      metaDescription: "Pipeline tells you which deals will close this quarter â€” and which won't. ",
-      h1: "Know which deals will close â€” 30 days before your forecast meeting.",
+      title: "Pipeline — Revenue intelligence for B2B teams",
+      metaDescription: "Pipeline tells you which deals will close this quarter — and which won't. ",
+      h1: "Know which deals will close — 30 days before your forecast meeting.",
       h2s: ["How Pipeline works", "Customers", "Pricing", "FAQ", "Get a demo"],
       bodyText:
         "Pipeline pulls data from your CRM, email, and call tools to score every deal in real time. " +
         "Built specifically for B2B sales teams running weekly pipeline reviews. " +
         "Sales leaders using Pipeline report tighter forecasts and shorter weekly pipeline reviews. " +
-        "SOC 2 Type II certified. GDPR compliant. Get a free 14-day trial â€” no credit card required. " +
+        "SOC 2 Type II certified. GDPR compliant. Get a free 14-day trial — no credit card required. " +
         "Pricing starts at $49 per user per month. Cancel anytime. " +
         "Frequently asked questions: How is this different from Clari? Can I import historical deals? " +
         "Is my data secure? Do you support Salesforce and HubSpot? How long does onboarding take? " +
