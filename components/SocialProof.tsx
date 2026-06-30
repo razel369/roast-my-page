@@ -7,8 +7,8 @@ export function SocialProof() {
     },
     {
       label: "Checks run",
-      value: "10+",
-      note: "Headline, CTAs, social proof, trust, FAQ, pricing, more.",
+      value: "9",
+      note: "Headline, CTAs, social proof, trust, FAQ, pricing, and more across nine diagnostic categories.",
     },
     {
       label: "Output format",

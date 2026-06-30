@@ -3,7 +3,7 @@ import { ComparisonTemplate } from "@/components/ComparisonTemplate";
 export const metadata = {
   title: "Roast My Page vs a $10K CRO consultant — same verdict, different bill",
   description:
-    "Hiring a CRO consultant costs $5,000–$15,000 and takes two weeks. Roast My Page delivers the same five insights in 60 seconds. Honest comparison.",
+    "Hiring a CRO consultant costs $5,000–$15,000 and takes two weeks. Roast My Page delivers the structural fixes in 60 seconds. Honest comparison.",
   keywords: ["CRO consultant alternative", "free conversion audit", "landing page consultant"],
 };
 
@@ -45,7 +45,7 @@ const comparison = [
   },
   {
     feature: "Best for",
-    other: "Mid-market companies with $50k+ ad spend, where a 2% conversion lift pays for the engagement in a week.",
+    other: "Mid-market and larger companies with meaningful ad spend, where expert nuance justifies the engagement.",
     us: "Early-stage teams who can't yet justify a $10K retainer but still need to ship a landing page.",
   },
 ];
@@ -61,7 +61,7 @@ const faq = [
   },
   {
     q: "Why free?",
-    a: "Because the fifty insights every landing page needs are well-trodden patterns. Automating them is straightforward. The interesting work — what the page should actually say for your market — is what your consultant is really paid for.",
+    a: "Because the foundational CRO checks every landing page needs are well-trodden patterns. Automating them is straightforward. The interesting work — what the page should actually say for your market — is what your consultant is really paid for.",
   },
 ];
 
@@ -70,8 +70,8 @@ export default function VsConsultantPage() {
     <ComparisonTemplate
       competitor="a CRO consultant"
       category="Free tool vs $10K engagement"
-      intro="A senior conversion-rate optimization consultant charges $5,000–$15,000 and delivers the same five insights you would get from running a free audit. Sometimes with extra nuance. Mostly without."
-      verdict="Use Roast My Page to find the structural issues today. Hire a human CRO consultant when your ad spend is large enough that a 2% lift pays for them in a week. That's the break-even."
+      intro="A senior conversion-rate optimization consultant charges $5,000–$15,000 and delivers the structural fixes you would get from running a free audit. Sometimes with extra nuance. Mostly without."
+      verdict="Use Roast My Page to find the structural issues today. Hire a human CRO consultant when your ad spend and conversion volume are large enough that expert nuance pays for itself. That's the break-even."
       comparison={comparison}
       faq={faq}
     />

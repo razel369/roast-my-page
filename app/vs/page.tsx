@@ -30,7 +30,7 @@ const COMPARISONS: Comparison[] = [
     category: "Human audit",
     priceLine: "$5,000–$15,000 per engagement",
     blurb: "Two weeks of Zoom calls, a 40-page PDF, three rounds of revisions.",
-    verdict: "A consultant delivers the same five insights. We deliver them in 60 seconds for free.",
+    verdict: "A consultant delivers the same structural fixes. We deliver them in 60 seconds for free.",
   },
 ];
 

@@ -43,19 +43,19 @@ function pickVerdict(score: number): { v: Verdict; label: string; blurb: string 
     return {
       v: "conversion-killer",
       label: "Conversion Killer",
-      blurb: "This page is actively repelling buyers. Expect sub-1% conversion.",
+      blurb: "This page is actively repelling buyers. Every weak signal above the fold is pushing visitors toward your competitors.",
     };
   if (score < 65)
     return {
       v: "needs-work",
       label: "Needs Work",
-      blurb: "Decent bones — a few targeted fixes could 2–3x your conversion.",
+      blurb: "Decent bones — a few targeted fixes could meaningfully lift your conversion rate from where it sits today.",
     };
   if (score < 82)
     return {
       v: "decent",
       label: "Solid",
-      blurb: "Strong foundation. Tighten the weak spots and you'll cross 5%.",
+      blurb: "Strong foundation. Tighten the weak spots and you'll move into the top tier of pages we score.",
     };
   return {
     v: "strong",
@@ -152,8 +152,8 @@ function findKillers(p: ParsedPage): Killer[] {
       killers.push({
         title: "Headline is too long to scan",
         severity: "high",
-        evidence: `"${p.h1}" — ${h1Words} words. Above the fold, you have ~3 seconds. Long headlines lose readers mid-sentence.`,
-        fix: "Cut to 8–12 words. Move supporting context to the sub-headline, not the headline.",
+        evidence: `"${p.h1}" — ${h1Words} words. Visitors decide whether to keep reading in seconds (Nielsen Norman Group), and long headlines lose readers before the promise lands.`,
+        fix: "Aim for around 8–12 words (a common CRO convention). Move supporting context to the sub-headline, not the headline.",
       });
     } else if (h1Words < 4) {
       killers.push({
@@ -188,7 +188,7 @@ function findKillers(p: ParsedPage): Killer[] {
     killers.push({
       title: "Choice paralysis from too many CTAs",
       severity: "high",
-      evidence: `Detected ${p.ctaButtons.length} call-to-action buttons. Every additional CTA costs you ~10% of conversions on the primary one.`,
+      evidence: `Detected ${p.ctaButtons.length} call-to-action buttons. Multiple competing CTAs force visitors to pick, and each option adds decision friction (Hick's Law, common UX heuristic).`,
       fix: "Pick ONE primary CTA. Demote everything else to footer or text links.",
     });
   }
@@ -219,7 +219,7 @@ function findKillers(p: ParsedPage): Killer[] {
       title: "Page is unspecific — no numbers anywhere",
       severity: "high",
       evidence: "Words like 'many', 'thousands', 'fast', 'easy' do nothing. Buyers filter vague copy as marketing.",
-      fix: "Replace every vague claim with a number. 'Save hours' → 'Save 4 hours/week'. 'Many users' → '8,200 designers'.",
+      fix: "Replace every vague claim with a number from your own data. 'Save hours' → your real time-saved figure. 'Many users' → your actual customer count.",
     });
   }
 
@@ -229,7 +229,7 @@ function findKillers(p: ParsedPage): Killer[] {
       title: "Page is too thin to convert",
       severity: "high",
       evidence: `Only ${p.wordCount} words. Buyers need enough context to justify a click — thin pages feel like a scam.`,
-      fix: "Aim for 600–1,500 words for B2B, 300–700 for B2C. Add a 'How it works' section and 3 use cases with specifics.",
+      fix: "In our experience, B2B pages around 600–1,500 words and B2C pages around 300–700 words tend to give buyers enough context. Add a 'How it works' section and a few use cases with specifics.",
     });
   }
 
@@ -238,8 +238,8 @@ function findKillers(p: ParsedPage): Killer[] {
     killers.push({
       title: "Meta description is missing or weak",
       severity: "medium",
-      evidence: `Meta: "${p.metaDescription || "(empty)"}". You're losing 30%+ of search clicks before they ever land.`,
-      fix: "Write a 140–160 char meta that (1) repeats the value prop, (2) adds a proof point, (3) ends with a soft CTA.",
+      evidence: `Meta: "${p.metaDescription || "(empty)"}". A missing or weak meta description makes your page blend in with competitors in search results, giving searchers no reason to choose your link.`,
+      fix: "Write a meta description of roughly 140–160 characters (Google's documented SERP truncation limit) that (1) repeats the value prop, (2) adds a proof point, (3) ends with a soft CTA.",
     });
   }
 
@@ -249,7 +249,7 @@ function findKillers(p: ParsedPage): Killer[] {
       title: "No FAQ to neutralize late-funnel objections",
       severity: "medium",
       evidence: "High-intent visitors at the bottom of the page stall on pricing/feature/objection questions. No FAQ = no answer = bounce.",
-      fix: "Add 5–8 FAQs targeting the real objections: 'How is this different from X?', 'Can I cancel?', 'Is my data secure?', etc.",
+      fix: "Add a handful of FAQs targeting the real objections: 'How is this different from X?', 'Can I cancel?', 'Is my data secure?', etc. (5–8 is a common target range in CRO practice.)",
     });
   }
 
@@ -282,7 +282,7 @@ function generateHeroRewrite(p: ParsedPage): { headline: string; subhead: string
   const cta = p.ctaButtons[0] && !WEAK_CTA_PATTERNS.some((re) => re.test(p.ctaButtons[0] || ""))
     ? `Keep "${p.ctaButtons[0]}" but add urgency: "${p.ctaButtons[0]} — free for 14 days"`
     : `Replace "${p.ctaButtons[0] || "Submit"}" with "Start free — no card"`;
-  const rationale = "Your headline should compress three things into 8–12 words: WHO it's for, WHAT outcome, and WHY it's faster/cheaper/easier than the alternative. Move everything else to the subhead.";
+  const rationale = "Your headline should compress three things into a short scan-friendly line: WHO it's for, WHAT outcome, and WHY it's faster/cheaper/easier than the alternative. Around 8–12 words is a common target, but the real test is whether the promise is unmistakable in a glance. Move everything else to the subhead.";
 
   return { headline, subhead, cta, rationale };
 }
@@ -292,7 +292,7 @@ function generateQuickWins(killers: Killer[], p: ParsedPage): string[] {
 
   // Pick the cheapest highest-impact fixes
   if (killers.some((k) => /headline/i.test(k.title))) {
-    wins.push("Rewrite the headline to be (audience) + (outcome) + (timeframe). 30 minutes, biggest single lift on most pages.");
+    wins.push("Rewrite the headline to be (audience) + (outcome) + (timeframe). Roughly 30 minutes of work, and in our experience this is one of the higher-leverage edits you can make.");
   }
   if (killers.some((k) => /cta/i.test(k.title))) {
     wins.push("Change your primary CTA from generic ('Learn more', 'Submit') to value-named ('Get my free audit').");
@@ -301,7 +301,7 @@ function generateQuickWins(killers: Killer[], p: ParsedPage): string[] {
     wins.push("Add a single named testimonial with a real photo and one specific result above the fold.");
   }
   if (!p.hasNumbers) {
-    wins.push("Replace every vague claim ('thousands', 'many') with a real number ('8,200 customers', '4 hrs saved / week').");
+    wins.push("Replace every vague claim ('thousands', 'many') with a real number from your own data (your actual customer count, your real time-saved figure).");
   }
   if (killers.some((k) => /risk reversal/i.test(k.title))) {
     wins.push("Add a 'free for 14 days, no credit card' badge next to your main CTA.");

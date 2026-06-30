@@ -26,7 +26,7 @@ export default function AboutPage() {
           data but never told you what to actually fix.
         </p>
         <p>
-          So we built Roast My Page: a brutally specific audit that hands you the same five insights a $10K
+          So we built Roast My Page: a brutally specific audit that hands you the structural fixes a $10K
           consultant would, in under a minute, for free.
         </p>
 

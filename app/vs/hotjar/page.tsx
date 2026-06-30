@@ -15,12 +15,12 @@ const comparison = [
   },
   {
     feature: "Time to first signal",
-    other: "Days to weeks, while you collect enough sessions to be statistically meaningful.",
+    other: "Days to weeks of recording before the data tells you anything actionable.",
     us: "~6 seconds from URL paste to verdict.",
   },
   {
     feature: "Required traffic",
-    other: "1,000+ sessions/mo before heatmaps reveal anything useful.",
+    other: "Enough accumulated sessions that patterns stop being noise. Brand-new pages simply don't have any yet.",
     us: "Zero. Even day-one landing pages work.",
   },
   {
@@ -53,7 +53,7 @@ const comparison = [
 const faq = [
   {
     q: "Do they overlap at all?",
-    a: "Almost not. Heatmaps show you that 70% of users never reach the testimonial section. Roast My Page tells you the testimonial section is buried below a 600-word hero. Different jobs, run them both.",
+    a: "Almost not. Heatmaps show you that most visitors never reach the testimonial section. Roast My Page tells you the testimonial section is buried below a 600-word hero. Different jobs, run them both.",
   },
   {
     q: "Which should I install first?",
