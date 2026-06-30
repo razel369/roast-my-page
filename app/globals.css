@@ -4,32 +4,41 @@
 
 :root {
   color-scheme: light;
+
+  /* Palette: paper + ink + vermillion + warm gold accent + verdict colors */
   --bone: #E8E5DE;
+  --bone-100: #EFECE5;
+  --bone-200: #D9D5CB;
   --ink: #0F0F0F;
+  --ink-700: #3A3A3A;
+  --ink-500: #6B6B6B;
+  --ink-300: #9C988F;
   --vermillion: #C8321C;
+  --vermillion-dark: #9A2814;
+  --vermillion-light: #E04A33;
   --gold: #B8942E;
+  --gold-light: #E0BE5A;
+  --gold-dark: #8C6F22;
+  --forest: #2A4D2A;
+  --forest-light: #4A7A4A;
+  --crit: var(--vermillion);
+  --warn: #C47015;
+  --ok: var(--forest);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 html, body {
   background: var(--bone);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "ss01", "ss02", "tnum"; /* Plex Mono tabular nums */
+  font-feature-settings: "ss01", "ss02", "tnum";
 }
 
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+* { -webkit-tap-highlight-color: transparent; }
 
-::selection {
-  background: rgba(200, 50, 28, 0.18);
-  color: var(--ink);
-}
+::selection { background: rgba(200, 50, 28, 0.18); color: var(--ink); }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -37,42 +46,34 @@ html, body {
 ::-webkit-scrollbar-thumb:hover { background: #9B968A; }
 
 @layer components {
-  /* Document container — single column, letter-sized proportions. */
   .document {
     @apply mx-auto w-full max-w-[920px] px-6 sm:px-10;
   }
 
-  /* Filing label — used for small caps tracking markers. */
   .filing {
     @apply font-mono text-[10px] uppercase tracking-stamped text-ink-300;
   }
 
-  /* Eyebrow — like a section header in a report. */
   .eyebrow {
     @apply font-mono text-[11px] uppercase tracking-stamped text-ink-700;
   }
 
-  /* Display headline — big serif. */
   .display {
-    @apply font-display font-bold text-ink-900 leading-[0.95] tracking-[-0.02em];
+    @apply font-display font-bold text-ink-900 leading-[0.92] tracking-[-0.025em];
   }
 
-  /* The numbered section header — earns its keep on every section. */
   .section-num {
     @apply font-mono text-[11px] uppercase tracking-stamped text-ink-700;
   }
 
-  /* Hairline rule — the lines that section the document. */
   .hairline {
     @apply h-px w-full bg-rule;
   }
 
-  /* Double rule (signature element on the document). */
   .double-rule {
     background-image: linear-gradient(to bottom, transparent 0, transparent calc(50% - 0.5px), #0F0F0F calc(50% - 0.5px), #0F0F0F calc(50% + 0.5px), transparent calc(50% + 0.5px), transparent 100%);
   }
 
-  /* The form "stamp field" — looks like an old typewriter input. */
   .stamp-field {
     @apply w-full bg-bone-50 border border-ink-700 px-4 py-3 font-mono text-sm text-ink-900 placeholder:text-ink-500 transition-colors duration-200;
   }
@@ -80,7 +81,6 @@ html, body {
     @apply outline-none border-vermillion bg-bone-100 shadow-inset;
   }
 
-  /* Stamp the page background with subtle paper grain. */
   .paper-bg {
     background-color: var(--bone);
     background-image:
@@ -88,7 +88,16 @@ html, body {
     background-size: 3px 3px;
   }
 
-  /* Exhibit card — an "evidence" container. */
+  /* Stronger paper grain variant for hero */
+  .paper-bg-grain {
+    background-color: var(--bone);
+    background-image:
+      radial-gradient(rgba(15,15,15,0.045) 1px, transparent 1px),
+      radial-gradient(rgba(15,15,15,0.025) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 1px;
+  }
+
   .exhibit {
     @apply border border-ink-900 bg-bone-50 transition-shadow duration-300;
   }
@@ -99,7 +108,6 @@ html, body {
     @apply px-5 py-4 space-y-3 text-sm text-ink-800 leading-relaxed;
   }
 
-  /* Hoverable exhibit card */
   .exhibit-hover {
     @apply exhibit cursor-default;
   }
@@ -107,7 +115,6 @@ html, body {
     @apply shadow-exhibit-hover bg-bone-100;
   }
 
-  /* Primary CTA — solid vermillion, no glow. */
   .btn-stamp {
     @apply inline-flex items-center justify-center gap-2 bg-vermillion text-bone-50 px-6 py-3 font-mono text-xs uppercase tracking-stamped font-semibold border border-vermillion-dark transition-all duration-200 hover:bg-vermillion-light active:translate-y-px shadow-stamp hover:shadow-stamp-lg;
   }
@@ -116,7 +123,6 @@ html, body {
     @apply inline-flex items-center justify-center gap-2 border border-ink-900 bg-bone text-ink-900 px-5 py-3 font-mono text-xs uppercase tracking-stamped font-semibold transition-all duration-200 hover:bg-bone-100 hover:shadow-exhibit-hover active:translate-y-px;
   }
 
-  /* Card that lifts on hover */
   .card-lift {
     @apply transition-all duration-300;
   }
@@ -124,27 +130,119 @@ html, body {
     @apply -translate-y-0.5 shadow-exhibit-hover;
   }
 
-  /* Decorative watermark text */
   .watermark {
     @apply absolute select-none pointer-events-none text-ink-900/5 font-display font-black leading-none;
   }
 }
 
-/* Accessible focus rings — visible black ring, no animation. */
+/* Verdict color helpers */
+.verdict-killer { color: var(--crit); }
+.verdict-warn   { color: var(--warn); }
+.verdict-ok     { color: var(--ok); }
+
+.bg-verdict-killer { background-color: var(--crit); }
+.bg-verdict-warn   { background-color: var(--warn); }
+.bg-verdict-ok     { background-color: var(--ok); }
+
+/* Scale clamp utilities for hero typography */
+.clamp-hero {
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.88;
+}
+.clamp-display {
+  font-size: clamp(40px, 6.5vw, 96px);
+  line-height: 0.94;
+}
+.clamp-section {
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.02;
+}
+.clamp-subhead {
+  font-size: clamp(20px, 2vw, 32px);
+  line-height: 1.18;
+}
+.clamp-stat {
+  font-size: clamp(72px, 12vw, 168px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+}
+
 :focus-visible {
   outline: 2px solid var(--vermillion);
   outline-offset: 2px;
 }
 
-/* Staggered animation delay helpers */
 .delay-100 { animation-delay: 100ms !important; }
 .delay-200 { animation-delay: 200ms !important; }
 .delay-300 { animation-delay: 300ms !important; }
 .delay-400 { animation-delay: 400ms !important; }
 .delay-500 { animation-delay: 500ms !important; }
 .delay-600 { animation-delay: 600ms !important; }
+.delay-700 { animation-delay: 700ms !important; }
+.delay-800 { animation-delay: 800ms !important; }
 
-/* Respect reduced motion preferences. */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.cursor-blink::after {
+  content: "";
+  display: inline-block;
+  width: 0.08em;
+  height: 0.85em;
+  background: var(--vermillion);
+  margin-left: 0.08em;
+  vertical-align: -0.05em;
+  animation: blink 0.9s steps(1) infinite;
+}
+
+@keyframes stamp-drop {
+  0% { transform: rotate(-8deg) scale(2.4); opacity: 0; }
+  40% { transform: rotate(-3deg) scale(0.92); opacity: 1; }
+  60% { transform: rotate(0.6deg) scale(1.03); opacity: 1; }
+  100% { transform: rotate(-1.5deg) scale(1); opacity: 1; }
+}
+.animate-stamp-drop {
+  animation: stamp-drop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes score-tick {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-score-tick {
+  animation: score-tick 0.6s ease-out both;
+}
+
+@keyframes ink-bleed {
+  from { filter: blur(2px) saturate(2); }
+  to { filter: blur(0) saturate(1); }
+}
+.animate-ink-bleed {
+  animation: ink-bleed 0.5s ease-out both;
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.animate-float {
+  animation: float-y 3s ease-in-out infinite;
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+.animate-progress {
+  animation: progress-fill 2.2s ease-in-out infinite;
+}
+
+@keyframes sheen {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

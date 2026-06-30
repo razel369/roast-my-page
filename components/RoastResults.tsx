@@ -14,6 +14,71 @@ interface Props {
   source?: "llm" | "rules";
 }
 
+
+function verdictColor(v: string): string {
+  if (v === "Conversion Killer") return "var(--vermillion)";
+  if (v === "Needs Work") return "var(--warn)";
+  if (v === "Solid") return "var(--gold)";
+  return "var(--forest)";
+}
+
+function VerdictBanner({ result, filingId, date, source }: { result: RoastResult; filingId: string; date: string; source?: "llm" | "rules" }) {
+  const accent = verdictColor(result.verdictLabel);
+  return (
+    <div
+      className="relative overflow-hidden border-2 border-ink-900 bg-bone-50 animate-stamp-drop"
+      style={{ boxShadow: "8px 8px 0 #0F0F0F" }}
+    >
+      <div className="absolute inset-0 grid grid-cols-12 pointer-events-none opacity-[0.03] select-none" aria-hidden>
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div key={i} className="border-l border-ink-900" />
+        ))}
+      </div>
+      <div className="relative flex flex-col gap-6 px-6 py-7 sm:flex-row sm:items-end sm:gap-10 sm:px-10 sm:py-9">
+        <div>
+          <div className="filing mb-1">FILING {filingId} · {date}</div>
+          <div className="flex items-baseline gap-3 mt-2">
+            <span
+              className="font-display clamp-stat leading-none"
+              style={{
+                color: accent,
+                fontVariationSettings: "'wght' 900, 'opsz' 144, 'SOFT' 0",
+              }}
+            >
+              {result.score}
+            </span>
+            <span className="font-display text-3xl font-bold text-ink-900/40 sm:text-5xl">/ 100</span>
+          </div>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div
+            className="inline-block border-2 px-3 py-1.5 font-mono text-[11px] uppercase tracking-stamped font-bold"
+            style={{ borderColor: accent, color: accent, background: "var(--bone-100)" }}
+          >
+            Verdict · {result.verdictLabel}
+          </div>
+          <h2 className="mt-3 display break-all text-3xl sm:text-5xl text-ink-900">
+            {result.domain}
+          </h2>
+          <p className="mt-3 max-w-2xl font-body text-base text-ink-700 leading-relaxed">
+            {result.summary}
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            {source === "llm" && (
+              <div className="inline-flex items-center gap-2 border border-ink-900 bg-bone-100 px-3 py-1 font-mono text-[10px] uppercase tracking-stamped text-ink-700">
+                <span className="h-2 w-2 rounded-full bg-forest" />
+                AI-enriched
+              </div>
+            )}
+            <div className="inline-flex items-center gap-2 border border-ink-900 bg-bone-100 px-3 py-1 font-mono text-[10px] uppercase tracking-stamped text-ink-700">
+              Reviewed · {date}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 export function RoastResults({ result, source }: Props) {
   const filingId = `RM-${new Date(result.timestamp).getFullYear()}-${String(result.timestamp).slice(-4)}`;
   const date = new Date(result.timestamp).toLocaleDateString("en-US", {
@@ -24,6 +89,7 @@ export function RoastResults({ result, source }: Props) {
 
   return (
     <section className="document pt-12 pb-12 space-y-14 animate-fade-in">
+      <VerdictBanner result={result} filingId={filingId} date={date} source={source} />
       {/* ─── Document header ─────────────────────────────────────── */}
       <header>
         <div className="filing flex flex-wrap items-center justify-between gap-2">
