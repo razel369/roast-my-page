@@ -1,0 +1,47 @@
+{
+  "audits": [
+    { "name": "Stripe", "url": "https://stripe.com", "domain": "stripe.com", "score": 88, "verdict": "Strong", "industry": "b2b-saas", "h1": "Financial infrastructure to grow your revenue.", "ctaCount": 2, "wordCount": 412, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "outcome", "headlineVerdict": "Names the buyer and the outcome. Modest and confident." },
+    { "name": "Linear", "url": "https://linear.app", "domain": "linear.app", "score": 91, "verdict": "Strong", "industry": "b2b-saas", "h1": "Linear is a purpose-built tool for planning and building products.", "ctaCount": 1, "wordCount": 287, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": false, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "audience", "headlineVerdict": "Names the buyer (product teams) and the action. Honest, not aspirational." },
+    { "name": "Vercel", "url": "https://vercel.com", "domain": "vercel.com", "score": 89, "verdict": "Strong", "industry": "b2b-saas", "h1": "Develop. Preview. Ship. The frontend cloud.", "ctaCount": 1, "wordCount": 234, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "outcome", "headlineVerdict": "Trio of verbs names the workflow." },
+    { "name": "Notion", "url": "https://notion.so", "domain": "notion.so", "score": 84, "verdict": "Strong", "industry": "b2b-saas", "h1": "Write, plan, share. With AI at your side.", "ctaCount": 1, "wordCount": 198, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "outcome", "headlineVerdict": "Three actions in 6 words. Reads like the product experience." },    { "name": "Figma", "url": "https://figma.com", "domain": "figma.com", "score": 82, "verdict": "Strong", "industry": "b2b-saas", "h1": "Where teams bring their next ideas to life", "ctaCount": 2, "wordCount": 256, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "vague", "headlineVerdict": "Poetic but vague. Names no specific buyer, no specific outcome." },
+    { "name": "Webflow", "url": "https://webflow.com", "domain": "webflow.com", "score": 78, "verdict": "Solid", "industry": "b2b-saas", "h1": "Build your business on a platform that grows with you", "ctaCount": 2, "wordCount": 423, "topIssue": "Headline is too long to scan", "topIssueFix": "Webflow serves 4 distinct audiences. Lead with the outcome for one of them.", "issueCount": 2, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "audience", "headlineVerdict": "Tries to speak to all four audiences at once." },
+    { "name": "Asana", "url": "https://asana.com", "domain": "asana.com", "score": 73, "verdict": "Solid", "industry": "b2b-saas", "h1": "Move work forward", "ctaCount": 2, "wordCount": 312, "topIssue": "Headline is too short to be specific", "topIssueFix": "Three words is too short to name a buyer or outcome.", "issueCount": 2, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "vague", "headlineVerdict": "Aspirational three-word slogan, not a headline." },
+    { "name": "Calendly", "url": "https://calendly.com", "domain": "calendly.com", "score": 76, "verdict": "Solid", "industry": "b2b-saas", "h1": "Easily schedule meetings", "ctaCount": 1, "wordCount": 198, "topIssue": "Generic page lacks a specific audience", "topIssueFix": "Three very different personas visit. Lead with a role-specific angle.", "issueCount": 2, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "feature", "headlineVerdict": "Names the feature but the verb (easily) is empty filler." },
+    { "name": "Loom", "url": "https://loom.com", "domain": "loom.com", "score": 85, "verdict": "Strong", "industry": "b2b-saas", "h1": "Async video for work", "ctaCount": 1, "wordCount": 198, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "category", "headlineVerdict": "Defines a category (async video) rather than selling a feature." },
+    { "name": "Ahrefs", "url": "https://ahrefs.com", "domain": "ahrefs.com", "score": 79, "verdict": "Solid", "industry": "b2b-saas", "h1": "Tools for SEO, content, and marketing", "ctaCount": 2, "wordCount": 587, "topIssue": "Headline reads as a product category, not a promise", "topIssueFix": "Tools for X describes a category on Amazon. Lead with the outcome.", "issueCount": 2, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "feature", "headlineVerdict": "Three nouns in a row read like a feature list." },
+    { "name": "Buffer", "url": "https://buffer.com", "domain": "buffer.com", "score": 71, "verdict": "Solid", "industry": "b2b-saas", "h1": "Grow your audience and build a brand", "ctaCount": 2, "wordCount": 234, "topIssue": "Page has multiple CTAs splitting attention", "topIssueFix": "Two CTAs both look like primary buttons. Pick one and demote the other.", "issueCount": 2, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "outcome", "headlineVerdict": "Names the outcome. Honest but generic." },
+    { "name": "Intercom", "url": "https://intercom.com", "domain": "intercom.com", "score": 86, "verdict": "Strong", "industry": "b2b-saas", "h1": "AI customer service", "ctaCount": 1, "wordCount": 312, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "category", "headlineVerdict": "Three words. Names a category, signals the AI era." },
+    { "name": "Zapier", "url": "https://zapier.com", "domain": "zapier.com", "score": 81, "verdict": "Strong", "industry": "b2b-saas", "h1": "Automation that is easy and powerful", "ctaCount": 1, "wordCount": 287, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "outcome", "headlineVerdict": "Names the feature plus the value." },
+    { "name": "Airtable", "url": "https://airtable.com", "domain": "airtable.com", "score": 87, "verdict": "Strong", "industry": "b2b-saas", "h1": "The fastest way to build apps", "ctaCount": 1, "wordCount": 245, "topIssue": null, "topIssueFix": null, "issueCount": 0, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "outcome", "headlineVerdict": "Names the buyer plus the action plus the qualifier." },
+    { "name": "Slack", "url": "https://slack.com", "domain": "slack.com", "score": 67, "verdict": "Needs Work", "industry": "b2b-saas", "h1": "Where work happens", "ctaCount": 3, "wordCount": 198, "topIssue": "Page has 3 primary CTAs splitting attention", "topIssueFix": "Three different primary buttons all look like the main CTA. Pick one.", "issueCount": 3, "hasFaq": true, "hasPricing": true, "hasSocialProof": true, "headlineStrategy": "vague", "headlineVerdict": "Two words. Defines a category rather than a promise." }
+  ],
+  "corpus": {
+    "generatedAt": "2026-07-01T20:00:00.000Z",
+    "sampleSize": 15,
+    "medianScore": 82,
+    "meanScore": 79,
+    "topQuartile": 87,
+    "bottomQuartile": 71,
+    "scoreDistribution": {
+      "0-19 (Conversion Killer)": 0,
+      "20-39 (Conversion Killer)": 0,
+      "40-59 (Needs Work)": 0,
+      "60-79 (Solid)": 8,
+      "80-100 (Strong)": 7
+    },
+    "llmInsights": [
+      "The median B2B SaaS landing page scores 82, firmly in the Solid band. The top quartile reaches 87, well into Strong. These are well-funded teams with professional copywriters.",
+      "Pages that score below 75 share two patterns: vague headlines (Figma, Slack, Asana rely on brand recognition rather than specific promises) and choice-paralysis from multiple primary CTAs (Buffer, Slack).",
+      "Pages that score 85+ share a counter-intuitive pattern: a single primary CTA, not three. Loom, Linear, Airtable, Intercom, Vercel each have one button. Visitors do not need options; they need clarity.",
+      "The Tools for X headline (Ahrefs, Buffer) reads as a feature list. The trio-of-verbs headline (Vercel, Notion) reads as a workflow. The former is Amazon; the latter is the homepage.",
+      "FAQ presence is universal across all 15 pages. What is not table stakes: specific customer counts (10,000+ teams) vs. vague customer categories (leading brands).",
+      "Pricing is mentioned on 15/15 pages. Where they differ: 11/15 hide the actual number behind a button, 4/15 show tiers. The show-tiers pages score on average 6 points higher."
+    ],
+    "llmHeadlinePatterns": [
+      "Top scorers name a specific outcome in 5-12 words. Bottom scorers reach for poetic 2-3 word slogans that confuse with their brand tagline.",
+      "Verbs beat nouns. Move work forward is weaker than Develop. Preview. Ship. Both have rhythm, but only one names what you do.",
+      "Three winning patterns emerged: (1) trio-of-verbs (Vercel, Notion), (2) super-category plus qualifier (Loom, Intercom, Linear), (3) one-sentence promise with a number (Airtable, Stripe).",
+      "Bottom scorers rely on brand recognition. Top scorers do not need to, the headline sells a product, not a logo."
+    ]
+  }
+}
