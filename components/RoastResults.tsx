@@ -6,6 +6,7 @@ import { FeedbackWidget } from "./FeedbackWidget";
 import { DiagnosticGrid } from "./DiagnosticGrid";
 import { HeroRewriteCard } from "./HeroRewriteCard";
 import { QuickWinsTimeline } from "./QuickWinsTimeline";
+import { IndustryInsight } from "./IndustryInsight";
 import { TrustAudit } from "./TrustAudit";
 import { ActionPlanChecklist } from "./ActionPlanChecklist";
 

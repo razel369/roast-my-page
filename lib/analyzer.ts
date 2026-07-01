@@ -1,4 +1,5 @@
 import type { ParsedPage, RoastResult, Killer, Verdict } from "./types";
+import { detectIndustry, industryTip, ctaAlignmentNote } from "./industry";
 
 const POWER_WORDS = [
   "free", "instantly", "proven", "guaranteed", "effortless", "unlock",
@@ -362,6 +363,22 @@ function makeId(): string {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
 }
 
+
+// Build industry-specific tip list (heuristic, no fabricated stats).
+function buildIndustryTips(p: ParsedPage, ctaText: string): string[] {
+  const ind = detectIndustry(p);
+  const tips: string[] = [];
+  for (const cat of ['trust', 'pricing', 'cta'] as const) {
+    const t = industryTip(ind, cat);
+    if (t) tips.push(t);
+  }
+  const trimmed = (ctaText || '').trim();
+  if (trimmed) {
+    const note = ctaAlignmentNote(ind, trimmed);
+    if (note) tips.push(note);
+  }
+  return tips;
+}
 export function roast(p: ParsedPage): RoastResult {
   const trustAnalysis = detectTrustSignals(p);
   const objectionMap = detectObjectionCoverage(p);

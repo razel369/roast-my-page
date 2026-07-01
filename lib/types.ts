@@ -28,6 +28,8 @@ export interface VisualCritique {
   visualHierarchy: string;
 }
 
+export type Industry = 'b2b-saas' | 'ecommerce' | 'creator' | 'agency' | 'fintech' | 'media' | 'unknown';
+
 export interface HeroRewrite {
   headline: string;
   subhead: string;
@@ -83,6 +85,8 @@ export interface RoastResult {
     trustScore: number;
     powerWordCount: number;
   };
+  industry?: Industry;
+  industryTips?: string[];
 }
 
 export interface MultiPageRoast {
