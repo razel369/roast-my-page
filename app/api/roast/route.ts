@@ -5,19 +5,19 @@ import { clientIpFromHeaders, rateLimit } from "@/lib/rateLimit";
 import { getLlmConfig } from "@/lib/llm";
 import { captureScreenshots, captureBackend, type ScreenshotCapture } from "@/lib/screenshot";
 import { lookupToken, type ProRecord } from "@/lib/polar";
+import { buildMultiPageRoast } from "@/lib/siteScore";
+import type { RoastResult } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 function extractBearerOrCookie(req: NextRequest): string | null {
-  // 1. Authorization: Bearer <token>
   const auth = req.headers.get("authorization");
   if (auth && /^Bearer\s+/.test(auth)) {
     const m = auth.match(/^Bearer\s+(.+)$/);
     if (m) return m[1].trim();
   }
-  // 2. rmp_pro_token cookie (set by /welcome for web users)
   const cookie = req.cookies.get("rmp_pro_token")?.value;
   if (cookie) return cookie;
   return null;
@@ -29,10 +29,31 @@ async function getProRecord(req: NextRequest): Promise<ProRecord | null> {
   return lookupToken(token);
 }
 
+function normalizeUrl(u: string): string {
+  return u.startsWith("http") ? u : "https://" + u;
+}
+
+// Per-page audit pipeline. Throws on fetch/parse failure.
+async function auditOne(url: string, isPro: boolean, includeScreenshots: boolean): Promise<RoastResult> {
+  const parsed = await fetchAndParse(url);
+  const fetchWarning = parsed.fetchWarning;
+
+  const screenshotsPromise: Promise<ScreenshotCapture> =
+    includeScreenshots && captureBackend() !== "disabled"
+      ? captureScreenshots(url)
+      : Promise.resolve({ desktop: null, mobile: null, errors: [], elapsedMs: 0, backend: "disabled" });
+
+  const useLlm = isPro;
+  const { result, source, warning: llmWarning } = await enrichRoast(parsed, await screenshotsPromise, useLlm);
+  // Attach fetch warning
+  return { ...result, ...(fetchWarning ? { fetchWarning } : {}) } as RoastResult;
+}
+
 export async function POST(req: NextRequest) {
   const pro = await getProRecord(req);
+  const isPro = !!pro;
 
-  if (!pro) {
+  if (!isPro) {
     const ip = clientIpFromHeaders(req.headers);
     const limit = await rateLimit(`roast:${ip}`);
 
@@ -52,38 +73,93 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json().catch(() => ({}));
-    const url: string | undefined = body?.url;
-    const text: string | undefined = body?.text;
-    const includeScreenshots = !!pro && body?.screenshots !== false;
+    const body = (await req.json().catch(() => ({}))) as {
+      url?: string;
+      text?: string;
+      urls?: unknown;
+      screenshots?: boolean;
+    };
+    const url = body?.url;
+    const text = body?.text;
+    const includeScreenshots = isPro && body?.screenshots !== false;
 
-    if (!url && !text) {
-      return NextResponse.json({ error: "Provide a url or text." }, { status: 400 });
+    if (!url && !text && !Array.isArray(body?.urls)) {
+      return NextResponse.json({ error: "Provide a url, text, or urls[]." }, { status: 400 });
     }
 
+    // Multi-page flow: array of URLs
+    if (Array.isArray(body?.urls) && body.urls.length > 0) {
+      const urls = (body.urls as unknown[])
+        .map((u) => (typeof u === "string" ? u.trim() : ""))
+        .filter((u) => u.length > 0)
+        .slice(0, 5); // cap at 5 pages
+
+      if (urls.length === 0) {
+        return NextResponse.json({ error: "urls[] must contain at least one URL." }, { status: 400 });
+      }
+
+      const normalized = urls.map(normalizeUrl);
+
+      // Run audits in parallel; each page can fail independently.
+      const audits = await Promise.allSettled(normalized.map((u) => auditOne(u, isPro, false)));
+
+      const pages: RoastResult[] = [];
+      const pageErrors: { url: string; error: string }[] = [];
+      audits.forEach((r, i) => {
+        if (r.status === "fulfilled") {
+          pages.push(r.value);
+        } else {
+          pageErrors.push({
+            url: normalized[i],
+            error: r.reason instanceof Error ? r.reason.message : "Unknown",
+          });
+        }
+      });
+
+      if (pages.length === 0) {
+        return NextResponse.json(
+          { error: "All pages failed to audit. Check that the URLs are reachable." },
+          { status: 502 },
+        );
+      }
+
+      const multi = buildMultiPageRoast(pages);
+      return NextResponse.json(
+        {
+          result: multi,
+          source: "rules",
+          plan: isPro ? "pro" : "free",
+          pageErrors: pageErrors.length > 0 ? pageErrors : undefined,
+        },
+        { headers: { "Cache-Control": "no-store", "X-Plan": isPro ? "pro" : "free", "X-MultiPage": "true" } },
+      );
+    }
+
+    // Single-page flow (existing path)
     let parsed;
     let fetchWarning: string | undefined;
     if (text && text.trim().length > 20) {
       parsed = parseFromText(text, url || "https://pasted.local");
     } else {
       try {
-        parsed = await fetchAndParse(url!);
-        fetchWarning = parsed.fetchWarning;
+        const result = await fetchAndParse(url!);
+        parsed = result;
+        fetchWarning = result.fetchWarning;
       } catch (err) {
         const message = err instanceof Error ? err.message : "Fetch failed";
         return NextResponse.json(
-          { error: `Couldn't fetch that page: ${message}. Try pasting your copy directly instead.` },
+          { error: `Couldn\u0027t fetch that page: ${message}. Try pasting your copy directly instead.` },
           { status: 502 },
         );
       }
     }
 
-    const screenshotsPromise: Promise<ScreenshotCapture> = includeScreenshots && captureBackend() !== "disabled" && url
-      ? captureScreenshots(url)
-      : Promise.resolve({ desktop: null, mobile: null, errors: [], elapsedMs: 0, backend: "disabled" });
+    const screenshotsPromise: Promise<ScreenshotCapture> =
+      includeScreenshots && captureBackend() !== "disabled" && url
+        ? captureScreenshots(url)
+        : Promise.resolve({ desktop: null, mobile: null, errors: [], elapsedMs: 0, backend: "disabled" });
 
-    // Pro gets LLM enrichment if env vars are configured; free never does.
-    const useLlm = !!pro;
+    const useLlm = isPro;
     const { result, source, warning: llmWarning } = await enrichRoast(parsed, await screenshotsPromise, useLlm);
     const warning = fetchWarning || llmWarning;
 
@@ -93,14 +169,14 @@ export async function POST(req: NextRequest) {
         source,
         warning,
         llmEnabled: useLlm && getLlmConfig().enabled,
-        plan: pro ? pro.plan : "free",
+        plan: isPro ? pro!.plan : "free",
       },
       {
         headers: {
-          "X-RateLimit-Remaining": pro ? "unlimited" : "0",
+          "X-RateLimit-Remaining": isPro ? "unlimited" : "0",
           "Cache-Control": "no-store",
           "X-Source": source,
-          "X-Plan": pro ? pro.plan : "free",
+          "X-Plan": isPro ? pro!.plan : "free",
         },
       },
     );
@@ -116,6 +192,6 @@ export async function GET() {
     plan: "free: 3/day rules-only · pro: unlimited + LLM + screenshots (subscription required)",
     llm: getLlmConfig(),
     screenshots: captureBackend(),
-    hint: "POST { url } or { text } to roast. Pro users include Authorization: Bearer <token> (or use the cookie set at /welcome).",
+    hint: "POST { url } or { urls: string[] } to roast. Pro users include Authorization: Bearer <token>.",
   });
 }

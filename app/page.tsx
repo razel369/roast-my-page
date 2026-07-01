@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useCallback, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { RoastForm } from "@/components/RoastForm";
@@ -12,9 +12,10 @@ import { FaqSection, FAQ_ITEMS } from "@/components/FaqSection";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TierBadge } from "@/components/TierBadge";
 import { ProFeaturesTeaser } from "@/components/ProFeaturesTeaser";
+import { MultiPageResults } from "@/components/MultiPageResults";
 import { ResultTLDR } from "@/components/ResultTLDR";
 import { RoastLoader } from "@/components/RoastLoader";
-import type { RoastResult } from "@/lib/types";
+import type { RoastResult, MultiPageRoast } from "@/lib/types";
 
 export default function HomePage() {
   const [result, setResult] = useState<RoastResult | null>(null);
@@ -65,3 +66,4 @@ export default function HomePage() {
     </>
   );
 }
+

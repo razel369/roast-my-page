@@ -84,3 +84,24 @@ export interface RoastResult {
     powerWordCount: number;
   };
 }
+
+export interface MultiPageRoast {
+  id: string;
+  domain: string;
+  timestamp: number;
+  siteScore: number;
+  siteVerdict: Verdict;
+  siteVerdictLabel: string;
+  pages: RoastResult[];
+  flow: FlowAnalysis;
+  crossPageRecommendations: string[];
+}
+
+export interface FlowAnalysis {
+  funnelCoherent: boolean;       // does each page lead to the next logically?
+  ctaConsistency: number;        // 0-100, how aligned CTAs are across pages
+  messageConsistency: number;    // 0-100, how aligned value props are across pages
+  weakestPage: string | null;    // URL of worst-scoring page
+  strongestPage: string | null;  // URL of best-scoring page
+  notes: string[];               // human-readable flow observations
+}

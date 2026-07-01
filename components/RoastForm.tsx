@@ -16,8 +16,9 @@ export function RoastForm({ onResult, onLoadingChange, onErrorChange }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
-  const [mode, setMode] = useState<"url" | "paste">("url");
+  const [mode, setMode] = useState<"url" | "paste" | "multi">("url");
   const [pasted, setPasted] = useState("");
+  const [urlsText, setUrlsText] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -65,6 +66,36 @@ export function RoastForm({ onResult, onLoadingChange, onErrorChange }: Props) {
     setError(null);
     setWarning(null);
 
+    // Multi-page mode: parse textarea as lines of URLs
+    if (mode === "multi") {
+      const urls = urlsText
+        .split(/\r?\n/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0)
+        .slice(0, 5);
+      if (urls.length === 0) {
+        setError("Paste at least one URL, one per line.");
+        return;
+      }
+      setLoading(true);
+      try {
+        const res = await fetch("/api/roast", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ urls }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Multi-page audit failed");
+        const result = data.result;
+        onResult(result, data.source);
+        if (data.warning) setWarning(data.warning);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Multi-page audit failed");
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     if (mode === "url") {
       if (!url.trim()) {
         setError("Drop a URL first.");
@@ -141,7 +172,7 @@ export function RoastForm({ onResult, onLoadingChange, onErrorChange }: Props) {
         <form ref={formRef} onSubmit={handleRoast} className="animate-fade-in px-5 py-6 sm:px-7 sm:py-7 space-y-5">
           {/* Mode tabs — improved styling */}
           <div role="tablist" aria-label="Input mode" className="flex gap-1 bg-bone-300 p-1 border border-ink-900 w-fit">
-            {(["url", "paste"] as const).map((m) => (
+            {(["url", "paste", "multi"] as const).map((m) => (
               <button
                 key={m}
                 type="button"
@@ -154,7 +185,7 @@ export function RoastForm({ onResult, onLoadingChange, onErrorChange }: Props) {
                     : "bg-transparent text-ink-700 hover:text-ink-900"
                 }`}
               >
-                {m === "url" ? "Enter URL" : "Paste copy"}
+                {m === "url" ? "Enter URL" : m === "paste" ? "Paste copy" : "Multi-page"}
               </button>
             ))}
           </div>
@@ -187,7 +218,23 @@ export function RoastForm({ onResult, onLoadingChange, onErrorChange }: Props) {
                 className="stamp-field resize-y leading-relaxed"
                 disabled={loading}
               />
-              <input
+                        {mode === "multi" ? (
+            <div>
+              <label className="filing mb-2 block" htmlFor="urls">Paste your funnel URLs (one per line, up to 5)</label>
+              <textarea
+                id="urls"
+                value={urlsText}
+                onChange={(e) => setUrlsText(e.target.value)}
+                placeholder={"https://yourstartup.com/\nhttps://yourstartup.com/pricing\nhttps://yourstartup.com/signup"}
+                rows={5}
+                className="stamp-field resize-y leading-relaxed font-mono text-xs"
+                disabled={loading}
+              />
+              <div className="mt-2 font-mono text-[10px] uppercase tracking-stamped text-ink-500">
+                Pro tier only · Analyzes funnel coherence, CTA alignment, message consistency
+              </div>
+            </div>
+          ) : null}            <input
                 type="text"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
