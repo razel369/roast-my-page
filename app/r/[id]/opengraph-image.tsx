@@ -9,7 +9,7 @@ import type { Severity } from "@/lib/types";
 export const runtime = "nodejs";
 export const contentType = "image/png";
 export const size = { width: 1200, height: 630 };
-export const alt = "Roast My Page — landing page audit";
+export const alt = "Croast — landing page audit";
 
 const severityColor: Record<Severity, string> = {
   critical: "#ef4444",
@@ -56,7 +56,7 @@ export default async function Image({ params }: { params: { id: string } }) {
             fontFamily: "Inter",
           }}
         >
-          <div style={{ fontSize: 96, fontWeight: 800 }}>Roast My Page</div>
+          <div style={{ fontSize: 96, fontWeight: 800 }}>Croast</div>
           <div style={{ fontSize: 28, marginTop: 16, color: "#a1a1aa" }}>
             Brutal audits for landing pages.
           </div>
@@ -100,9 +100,9 @@ export default async function Image({ params }: { params: { id: string } }) {
           >
             🔥
           </div>
-          <div style={{ fontSize: 28, fontWeight: 700 }}>Roast My Page</div>
+          <div style={{ fontSize: 28, fontWeight: 700 }}>Croast</div>
           <div style={{ marginLeft: "auto", fontSize: 20, color: "#a1a1aa" }}>
-            roastmypage.com
+            croast.io
           </div>
         </div>
 

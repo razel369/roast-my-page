@@ -10,7 +10,7 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     // Hook for future telemetry
-    console.error("[Roast My Page]", error);
+    console.error("[Croast]", error);
   }, [error]);
 
   return (

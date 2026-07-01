@@ -2,8 +2,8 @@ import Link from "next/link";
 import { PricingCards } from "./PricingCards";
 
 export const metadata = {
-  title: "Pricing— Roast My Page",
-  description: "Free for one-off verdicts. Pro for teams shipping every week.",
+  title: "Pricing— Croast",
+  description: "Free for one-off audits. Pro for teams shipping every week.",
 };
 
 export default function PricingPage() {

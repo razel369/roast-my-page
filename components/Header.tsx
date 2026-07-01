@@ -55,12 +55,12 @@ export function Header() {
       }`}
     >
       <div className="document flex h-14 items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group" aria-label="Roast My Page home">
+        <Link href="/" className="flex items-center gap-3 group" aria-label="Croast home">
           <span className="grid h-8 w-8 place-items-center rounded-full border-2 border-vermillion bg-vermillion text-bone-50 text-[10px] font-mono font-bold uppercase tracking-stamped transition-transform duration-300 group-hover:scale-105">
             rmp
           </span>
           <span className="font-mono text-xs uppercase tracking-stamped text-ink-900 font-semibold">
-            Roast My Page
+            Croast
           </span>
         </Link>
 

@@ -57,7 +57,7 @@ export function ShareButton({ result }: { result: RoastResult }) {
   const tweetIntent = `https://x.com/intent/post?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(tweetUrl)}`;
 
   const linkedinIntent = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(tweetUrl)}`;
-  const redditIntent = `https://www.reddit.com/submit?url=${encodeURIComponent(tweetUrl)}&title=${encodeURIComponent(`${emoji} ${result.score}/100 — Roast My Page verdict`)}`;
+  const redditIntent = `https://www.reddit.com/submit?url=${encodeURIComponent(tweetUrl)}&title=${encodeURIComponent(`${emoji} ${result.score}/100 — Croast verdict`)}`;
 
   return (
     <div className="flex flex-wrap items-center gap-2">

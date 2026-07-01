@@ -17,7 +17,7 @@ export default function RoastView({ params }: { params: { id: string } }) {
     if (r) {
       setResult(r);
       if (typeof document !== "undefined") {
-        document.title = `Roast of ${r.domain}: ${r.score}/100 (${r.verdictLabel}) -- Roast My Page`;
+        document.title = `Roast of ${r.domain}: ${r.score}/100 (${r.verdictLabel}) -- Croast`;
       }
     } else {
       setNotFound(true);

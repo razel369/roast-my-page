@@ -14,7 +14,7 @@ const COMPARISONS: Comparison[] = [
     category: "Behavior analytics",
     priceLine: "From $32/mo · 100 sessions/mo on the cheapest plan",
     blurb: "Heatmaps, session recordings, on-page surveys. Shows you what users do — not what to fix.",
-    verdict: "Use both. Hotjar reveals the where; Roast My Page reveals the why.",
+    verdict: "Use both. Hotjar reveals the where; Croast reveals the why.",
   },
   {
     slug: "pagespeed",
@@ -22,7 +22,7 @@ const COMPARISONS: Comparison[] = [
     category: "Performance scoring",
     priceLine: "Free · Google's Lighthouse under the hood",
     blurb: "Tells you your page is slow and has layout shift. Says nothing about why nobody is buying.",
-    verdict: "PageSpeed is for engineers fixing TTFB. Roast My Page is for marketers fixing conversions.",
+    verdict: "PageSpeed is for engineers fixing TTFB. Croast is for marketers fixing conversions.",
   },
   {
     slug: "cro-consultant",
@@ -35,9 +35,9 @@ const COMPARISONS: Comparison[] = [
 ];
 
 export const metadata = {
-  title: "Roast My Page vs — comparisons",
+  title: "Croast vs — comparisons",
   description:
-    "Roast My Page compared to Hotjar, PageSpeed Insights, and a $10K CRO consultant. Same verdict, different price tags.",
+    "Croast compared to Hotjar, PageSpeed Insights, and a $10K CRO consultant. Same verdict, different price tags.",
 };
 
 export default function VsIndexPage() {
@@ -49,7 +49,7 @@ export default function VsIndexPage() {
           className="display mt-3 text-5xl sm:text-6xl"
           style={{ fontVariationSettings: "'wght' 700, 'opsz' 144" }}
         >
-          Roast My Page vs.
+          Croast vs.
           <br />
           <span className="text-vermillion">Everything else.</span>
         </h1>

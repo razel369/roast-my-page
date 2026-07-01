@@ -22,7 +22,7 @@ export function Hero() {
     if (typeof window === "undefined") return;
     const host = window.location.hostname;
     if (!host || host === "localhost" || host === "127.0.0.1") return;
-    if (host.endsWith("roastmypage.com") || host.endsWith(".vercel.app")) return;
+    if (host.endsWith("croast.io") || host.endsWith(".vercel.app")) return;
     setSelfUrl(`https://${host}`);
   }, []);
 
@@ -71,7 +71,7 @@ export function Hero() {
         <div className="filing flex items-center justify-between">
           <span className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-vermillion animate-pulse-subtle" />
-            RM-2026-A
+            CR-2026-A
           </span>
           <span>Public · ~60s · No signup</span>
         </div>
@@ -79,17 +79,17 @@ export function Hero() {
 
         <div className="mt-10 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start lg:gap-16">
           <div>
-            <div className="filing mb-5">CASE NO. RM-2026-001 · OPEN</div>
+            <div className="filing mb-5">CR-2026-001 · OPEN</div>
             <h1
               className="display clamp-hero text-ink-900"
               style={{ fontVariationSettings: "'wght' 700, 'opsz' 144, 'SOFT' 0, 'WONK' 0" }}
             >
-              A verdict on your landing page <span className="text-vermillion italic" style={{ fontVariationSettings: "'wght' 400, 'opsz' 144, 'SOFT' 100" }}>in 60 seconds.</span>
+              Your AI conversion engineer. <span className="text-vermillion italic" style={{ fontVariationSettings: "'wght' 400, 'opsz' 144, 'SOFT' 100" }}>in 60 seconds.</span>
             </h1>
             <div className="mt-4 h-1 w-32 bg-vermillion animate-draw-line origin-left" aria-hidden />
 
             <p className="mt-7 max-w-xl font-body text-base text-ink-700 leading-relaxed sm:text-lg">
-              Paste your URL. Get a brutal, specific audit of the five things killing your conversion — with the rewrite dropped in. Free, no signup.
+              Paste your URL. Get a specific audit of the 5 things killing your conversion — with the rewrite dropped in. Free, no signup.
             </p>
 
             <ul className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-x-8">
@@ -137,7 +137,7 @@ export function Hero() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#D4A017]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-forest" />
                 <span className="ml-2 font-mono text-[10px] uppercase tracking-stamped text-ink-500">
-                  roastmypage.com/audit
+                  croast.io/audit
                 </span>
               </div>
               <div className="space-y-3 px-4 py-4 font-mono text-sm">

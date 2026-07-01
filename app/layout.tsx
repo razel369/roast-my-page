@@ -6,10 +6,10 @@ import { Analytics } from "@/components/Analytics";
 import { WebAppSchema } from "@/components/WebAppSchema";
 import { PrivacyNotice } from "@/components/PrivacyNotice";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://roastmypage.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://croast.io";
 
 export const metadata: Metadata = {
-  title: "Roast My Page — A verdict on your landing page in 60 seconds",
+  title: "Croast — A verdict on your landing page in 60 seconds",
   description:
     "Paste your URL. Get a brutal, specific audit of what's killing your conversion — headline, CTAs, social proof, trust signals, and a one-hour fix plan. Free. No signup.",
   keywords: [
@@ -21,20 +21,20 @@ export const metadata: Metadata = {
     "landing page verdict",
     "free conversion audit",
   ],
-  authors: [{ name: "Roast My Page" }],
+  authors: [{ name: "Croast" }],
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Roast My Page — A verdict on your landing page",
+    title: "Croast — A verdict on your landing page",
     description:
       "Paste your URL. Get a brutal, specific audit of what's killing your conversion. Free, no signup, 60 seconds.",
     type: "website",
-    siteName: "Roast My Page",
+    siteName: "Croast",
     url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Roast My Page — A verdict on your landing page",
+    title: "Croast — A verdict on your landing page",
     description: "Paste your URL. Get a brutal verdict. Free, no signup.",
   },
   robots: { index: true, follow: true },

@@ -1,9 +1,9 @@
 import { ComparisonTemplate } from "@/components/ComparisonTemplate";
 
 export const metadata = {
-  title: "Roast My Page vs a $10K CRO consultant — same verdict, different bill",
+  title: "Croast vs a $10K CRO consultant — same verdict, different bill",
   description:
-    "Hiring a CRO consultant costs $5,000–$15,000 and takes two weeks. Roast My Page delivers the structural fixes in 60 seconds. Honest comparison.",
+    "Hiring a CRO consultant costs $5,000–$15,000 and takes two weeks. Croast delivers the structural fixes in 60 seconds. Honest comparison.",
   keywords: ["CRO consultant alternative", "free conversion audit", "landing page consultant"],
 };
 
@@ -56,7 +56,7 @@ const faq = [
     a: "When you have the budget and the volume, yes — a real human catches cultural nuance and runs experiments we can't. Before that, run a free audit, ship the obvious fixes, then decide.",
   },
   {
-    q: "What does Roast My Page miss that a consultant catches?",
+    q: "What does Croast miss that a consultant catches?",
     a: "Brand voice calibration, qualitative audience research, and the ability to run a live multivariate test on your behalf. Anything requiring a researcher is on them.",
   },
   {
@@ -71,7 +71,7 @@ export default function VsConsultantPage() {
       competitor="a CRO consultant"
       category="Free tool vs $10K engagement"
       intro="A senior conversion-rate optimization consultant charges $5,000–$15,000 and delivers the structural fixes you would get from running a free audit. Sometimes with extra nuance. Mostly without."
-      verdict="Use Roast My Page to find the structural issues today. Hire a human CRO consultant when your ad spend and conversion volume are large enough that expert nuance pays for itself. That's the break-even."
+      verdict="Use Croast to find the structural issues today. Hire a human CRO consultant when your ad spend and conversion volume are large enough that expert nuance pays for itself. That's the break-even."
       comparison={comparison}
       faq={faq}
     />

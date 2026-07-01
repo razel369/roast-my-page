@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const size = { width: 1200, height: 630 };
-export const alt = "Welcome to Roast My Page Pro";
+export const alt = "Welcome to Croast Pro";
 
 async function loadFonts() {
   const bold = await fetch(
@@ -43,7 +43,7 @@ export default async function Image() {
           >
             🔥
           </div>
-          <div style={{ fontSize: 26, fontWeight: 700 }}>Roast My Page</div>
+          <div style={{ fontSize: 26, fontWeight: 700 }}>Croast</div>
         </div>
         <div style={{ fontSize: 96, fontWeight: 800, color: "#f97316", marginTop: 60, lineHeight: 1 }}>
           You&apos;re in.
@@ -51,7 +51,7 @@ export default async function Image() {
         <div style={{ fontSize: 30, fontWeight: 700, marginTop: 18, color: "#f7f7f8", maxWidth: 900, lineHeight: 1.2 }}>
           Unlimited landings audited. AI critique enabled. Cancel anytime.
         </div>
-        <div style={{ marginTop: "auto", fontSize: 22, color: "#a1a1aa" }}>roastmypage.com/welcome</div>
+        <div style={{ marginTop: "auto", fontSize: 22, color: "#a1a1aa" }}>croast.io/welcome</div>
       </div>
     ),
     { ...size, fonts },

@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "nodejs";
 export const contentType = "image/png";
 export const size = { width: 1200, height: 630 };
-export const alt = "Roast My Page vs Hotjar — comparison";
+export const alt = "Croast vs Hotjar — comparison";
 
 async function loadFonts() {
   const regular = await fetch(
@@ -37,7 +37,7 @@ export default async function Image() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <div style={{ width: 44, height: 44, borderRadius: 10, background: "#f97316", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>🔥</div>
-          <div style={{ fontSize: 26, fontWeight: 700 }}>Roast My Page</div>
+          <div style={{ fontSize: 26, fontWeight: 700 }}>Croast</div>
         </div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 18, marginTop: 90 }}>
           <div style={{ fontSize: 32, color: "#a1a1aa", fontWeight: 700, letterSpacing: 4 }}>VS.</div>
@@ -46,7 +46,7 @@ export default async function Image() {
         <div style={{ fontSize: 34, fontWeight: 700, marginTop: 30, color: "#f7f7f8", maxWidth: 900, lineHeight: 1.2 }}>
           Analytics vs audit. Heatmaps show the where — we explain the why.
         </div>
-        <div style={{ marginTop: "auto", fontSize: 22, color: "#a1a1aa" }}>roastmypage.com/vs/hotjar</div>
+        <div style={{ marginTop: "auto", fontSize: 22, color: "#a1a1aa" }}>croast.io/vs/hotjar</div>
       </div>
     ),
     { ...size, fonts },

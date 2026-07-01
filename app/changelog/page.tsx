@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Changelog — Roast My Page",
+  title: "Changelog — Croast",
   description: "What shipped, what changed. Updated as we ship.",
 };
 
@@ -16,7 +16,7 @@ const ENTRIES: Entry[] = [
     changes: [
       "Comparison landing pages: /vs/hotjar, /vs/pagespeed, /vs/cro-consultant for SEO long-tail.",
       "Feedback widget on every verdict — quick 👍/👎 with optional reason.",
-      "'Try it on {your domain}' CTA in hero (auto-fills your URL when you visit from a non-roastmypage.com domain).",
+      "'Try it on {your domain}' CTA in hero (auto-fills your URL when you visit from a non-croast.io domain).",
       "URL normalization: tracking params (utm_*, fbclid, gclid) stripped before fetching — cleaner audits.",
       "JS-rendered page detection: when a site is a React/Vue SPA and returns an empty shell, we surface a paste-mode hint.",
       "Pricing FAQ accuracy fix: free is 3/day, Pro is 8/min.",

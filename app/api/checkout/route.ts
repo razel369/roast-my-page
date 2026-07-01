@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     const origin =
       req.headers.get("origin") ||
       process.env.NEXT_PUBLIC_SITE_URL ||
-      "https://roastmypage.com";
+      "https://croast.io";
 
     const session = await createCheckoutSession({
       plan,

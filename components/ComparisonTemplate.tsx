@@ -38,7 +38,7 @@ export function ComparisonTemplate({
           className="display mt-3 text-5xl sm:text-6xl"
           style={{ fontVariationSettings: "'wght' 700, 'opsz' 144" }}
         >
-          Roast My Page vs. <span className="text-vermillion">{competitor}</span>
+          Croast vs. <span className="text-vermillion">{competitor}</span>
         </h1>
         <p className="mt-4 max-w-2xl font-body text-base text-ink-700 leading-relaxed">
           {intro}
@@ -70,7 +70,7 @@ export function ComparisonTemplate({
                 {competitor}
               </th>
               <th className="px-4 py-3 text-left font-mono text-[10px] uppercase tracking-stamped text-vermillion">
-                Roast My Page
+                Croast
               </th>
             </tr>
           </thead>
@@ -111,7 +111,7 @@ export function ComparisonTemplate({
           </p>
         </div>
         <div className="border-2 border-vermillion bg-highlight-tint p-5">
-          <div className="filing mb-2 text-vermillion font-bold">Reach for Roast My Page when…</div>
+          <div className="filing mb-2 text-vermillion font-bold">Reach for Croast when…</div>
           <p className="font-body text-sm text-ink-900 leading-relaxed">
             You just shipped a landing page and want the same five insights a senior CRO would flag, in plain English,
             before you spend a dollar on traffic.

@@ -1,11 +1,11 @@
 // JSON-LD structured data: WebApplication + FAQPage + BreadcrumbList.
 // Helps Google show rich results for "landing page audit tool" queries.
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://roastmypage.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://croast.io";
 
 const webApp = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "Roast My Page",
+  name: "Croast",
   url: SITE_URL,
   description:
     "Free AI-powered landing page audit. Paste a URL, get a brutal verdict on what's killing your conversion in 60 seconds.",
@@ -32,7 +32,7 @@ const faq = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Is Roast My Page really free?",
+      name: "Is Croast really free?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "Yes. No signup, no credit card. Each audit takes ~6 seconds and uses both a hand-tuned rule engine and an optional AI layer.",
@@ -68,7 +68,7 @@ const faq = {
 const org = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Roast My Page",
+  name: "Croast",
   url: SITE_URL,
 };
 

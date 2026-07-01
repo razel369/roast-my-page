@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Roast My Page",
-    short_name: "Roast My Page",
+    name: "Croast",
+    short_name: "Croast",
     description: "Brutal AI audits for landing pages. Free. No signup.",
     start_url: "/",
     display: "standalone",

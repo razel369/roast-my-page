@@ -1,9 +1,9 @@
 import { ComparisonTemplate } from "@/components/ComparisonTemplate";
 
 export const metadata = {
-  title: "Roast My Page vs Hotjar — same page, different answers",
+  title: "Croast vs Hotjar — same page, different answers",
   description:
-    "Hotjar shows you where users click. Roast My Page tells you why your copy isn't converting. Honest comparison of two tools that solve different jobs.",
+    "Hotjar shows you where users click. Croast tells you why your copy isn't converting. Honest comparison of two tools that solve different jobs.",
   keywords: ["Hotjar alternative", "Hotjar vs", "landing page audit", "heatmaps", "conversion audit"],
 };
 
@@ -53,14 +53,14 @@ const comparison = [
 const faq = [
   {
     q: "Do they overlap at all?",
-    a: "Almost not. Heatmaps show you that most visitors never reach the testimonial section. Roast My Page tells you the testimonial section is buried below a 600-word hero. Different jobs, run them both.",
+    a: "Almost not. Heatmaps show you that most visitors never reach the testimonial section. Croast tells you the testimonial section is buried below a 600-word hero. Different jobs, run them both.",
   },
   {
     q: "Which should I install first?",
-    a: "Roast My Page, on day one. Fix the obvious copy issues before paying for traffic you intend to record. Then install Hotjar once you have enough volume.",
+    a: "Croast, on day one. Fix the obvious copy issues before paying for traffic you intend to record. Then install Hotjar once you have enough volume.",
   },
   {
-    q: "Does Roast My Page replace Hotjar?",
+    q: "Does Croast replace Hotjar?",
     a: "No, and we don't want it to. Use Hotjar once you have traffic. Use us to decide what the page should say in the first place.",
   },
 ];
@@ -70,8 +70,8 @@ export default function VsHotjarPage() {
     <ComparisonTemplate
       competitor="Hotjar"
       category="Analytics vs Audit"
-      intro="Hotjar is a behavior analytics tool. It shows you what users do on a page that's already live. Roast My Page is a copy and structure audit — it tells you what's wrong with the page before you have any users. They answer different questions. Here is the honest comparison."
-      verdict="Different jobs. Use Hotjar to record 1,000 sessions of real users and watch them fail. Use Roast My Page on day one so fewer of them fail in the first place."
+      intro="Hotjar is a behavior analytics tool. It shows you what users do on a page that's already live. Croast is a copy and structure audit — it tells you what's wrong with the page before you have any users. They answer different questions. Here is the honest comparison."
+      verdict="Different jobs. Use Hotjar to record 1,000 sessions of real users and watch them fail. Use Croast on day one so fewer of them fail in the first place."
       comparison={comparison}
       faq={faq}
     />

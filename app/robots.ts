@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://roastmypage.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://croast.io";
   return {
     rules: [
       { userAgent: "*", allow: "/", disallow: ["/api/", "/r/"] },

@@ -161,7 +161,7 @@ export async function fetchAndParse(url: string): Promise<ParsedPage> {
       redirect: "follow",
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (compatible; RoastMyPageBot/1.0; +https://roastmypage.com) AppleWebKit/537.36",
+          "Mozilla/5.0 (compatible; croastBot/1.0; +https://croast.io) AppleWebKit/537.36",
         Accept: "text/html,application/xhtml+xml",
       },
     });

@@ -330,7 +330,7 @@ function generateOneHourPlan(killers: Killer[]): string[] {
   if (sorted.length > 0) plan.push(`Minutes 0–15 — ${sorted[0].title.split(" ").slice(0, 6).join(" ")}…`);
   if (sorted.length > 1) plan.push(`Minutes 15–35 — ${sorted[1].title.split(" ").slice(0, 6).join(" ")}…`);
   if (sorted.length > 2) plan.push(`Minutes 35–50 — ${sorted[2].title.split(" ").slice(0, 6).join(" ")}…`);
-  plan.push("Minutes 50–60 — Re-run Roast My Page and compare your new score. Ship if +5+.");
+  plan.push("Minutes 50–60 — Re-run Croast and compare your new score. Ship if +5+.");
   return plan;
 }
 

@@ -61,7 +61,7 @@ export function FaqSection({ items }: { items: QA[] }) {
 
 export const FAQ_ITEMS: QA[] = [
   {
-    q: "Is Roast My Page really free?",
+    q: "Is Croast really free?",
     a: "Yes. No signup, no credit card. Each audit runs in about 6 seconds using a hand-tuned rule engine, with optional AI enrichment on top.",
   },
   {

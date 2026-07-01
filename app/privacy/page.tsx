@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy — Roast My Page",
+  title: "Privacy — Croast",
   description:
     "What we collect, what we don't, and how the audit works without holding your data.",
 };
@@ -22,7 +22,7 @@ export default function PrivacyPage() {
 
       <div className="mt-8 max-w-none space-y-6 font-body text-base text-ink-800 leading-relaxed">
         <p>
-          Roast My Page was built around a single privacy claim:{" "}
+          Croast was built around a single privacy claim:{" "}
           <strong>the audit should not require us to remember anything about you.</strong>
           {" "}Below is exactly what is on file, where it lives, and how to remove it.
         </p>
@@ -126,12 +126,12 @@ export default function PrivacyPage() {
         <p>
           Questions, removals, or complaints: open an issue at{" "}
           <a
-            href="https://github.com/razel369/roast-my-page/issues"
+            href="https://github.com/razel369/croast/issues"
             target="_blank"
             rel="noreferrer"
             className="underline decoration-vermillion decoration-2 underline-offset-4 hover:text-vermillion"
           >
-            github.com/razel369/roast-my-page/issues
+            github.com/razel369/croast/issues
           </a>.
         </p>
 

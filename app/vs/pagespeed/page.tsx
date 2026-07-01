@@ -1,9 +1,9 @@
 import { ComparisonTemplate } from "@/components/ComparisonTemplate";
 
 export const metadata = {
-  title: "Roast My Page vs PageSpeed Insights — different problems",
+  title: "Croast vs PageSpeed Insights — different problems",
   description:
-    "PageSpeed tells you your site is slow. Roast My Page tells you your copy isn't converting. They fix different jobs — here's the honest comparison.",
+    "PageSpeed tells you your site is slow. Croast tells you your copy isn't converting. They fix different jobs — here's the honest comparison.",
   keywords: ["PageSpeed alternative", "PageSpeed vs", "conversion audit", "Core Web Vitals"],
 };
 
@@ -57,11 +57,11 @@ const faq = [
   },
   {
     q: "Can I use both?",
-    a: "Yes, and you should. PageSpeed catches what your user feels; Roast My Page catches what they decide. They're orthogonal problems.",
+    a: "Yes, and you should. PageSpeed catches what your user feels; Croast catches what they decide. They're orthogonal problems.",
   },
   {
-    q: "Is Roast My Page a Lighthouse replacement?",
-    a: "No. Lighthouse is a developer tool. Roast My Page is a marketing tool. Different stacks, different outputs, different jobs.",
+    q: "Is Croast a Lighthouse replacement?",
+    a: "No. Lighthouse is a developer tool. Croast is a marketing tool. Different stacks, different outputs, different jobs.",
   },
 ];
 
@@ -70,8 +70,8 @@ export default function VsPageSpeedPage() {
     <ComparisonTemplate
       competitor="PageSpeed Insights"
       category="Performance vs Conversion"
-      intro="PageSpeed Insights tells you whether your page loads fast. It does not — and was never designed to — tell you whether the page actually converts visitors into customers. Roast My Page is the missing second half."
-      verdict="PageSpeed makes your page fast. Roast My Page makes your page sell. They fix different problems. Run both, in that order."
+      intro="PageSpeed Insights tells you whether your page loads fast. It does not — and was never designed to — tell you whether the page actually converts visitors into customers. Croast is the missing second half."
+      verdict="PageSpeed makes your page fast. Croast makes your page sell. They fix different problems. Run both, in that order."
       comparison={comparison}
       faq={faq}
     />

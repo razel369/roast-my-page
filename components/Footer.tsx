@@ -11,7 +11,7 @@ export function Footer() {
                 rmp
               </span>
               <span className="font-mono text-[11px] uppercase tracking-stamped font-semibold">
-                Roast My Page
+                Croast
               </span>
             </div>
             <p className="mt-3 max-w-sm font-mono text-xs text-ink-700 leading-relaxed">
@@ -31,7 +31,7 @@ export function Footer() {
             <Link href="/changelog" className="transition-colors duration-200 hover:text-vermillion">Changelog</Link>
             <Link href="/privacy" className="transition-colors duration-200 hover:text-vermillion">Privacy</Link>
             <a
-              href="https://github.com/razel369/roast-my-page/issues"
+              href="https://github.com/razel369/croast/issues"
               target="_blank"
               rel="noreferrer"
               className="transition-colors duration-200 hover:text-vermillion"
