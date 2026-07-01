@@ -29,6 +29,8 @@ export function Footer() {
             <Link href="/history" className="transition-colors duration-200 hover:text-vermillion">Archive</Link>
             <Link href="/about" className="transition-colors duration-200 hover:text-vermillion">About</Link>
             <Link href="/changelog" className="transition-colors duration-200 hover:text-vermillion">Changelog</Link>
+            <Link href="/for/b2b-saas" className="transition-colors duration-200 hover:text-vermillion">For SaaS</Link>
+            <Link href="/for/ecommerce" className="transition-colors duration-200 hover:text-vermillion">For eCom</Link>
             <Link href="/status" className="transition-colors duration-200 hover:text-vermillion">Status</Link>
             <Link href="/privacy" className="transition-colors duration-200 hover:text-vermillion">Privacy</Link>
             <a
