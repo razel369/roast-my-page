@@ -29,9 +29,10 @@ export function Footer() {
             <Link href="/history" className="transition-colors duration-200 hover:text-vermillion">Archive</Link>
             <Link href="/about" className="transition-colors duration-200 hover:text-vermillion">About</Link>
             <Link href="/changelog" className="transition-colors duration-200 hover:text-vermillion">Changelog</Link>
+            <Link href="/status" className="transition-colors duration-200 hover:text-vermillion">Status</Link>
             <Link href="/privacy" className="transition-colors duration-200 hover:text-vermillion">Privacy</Link>
             <a
-              href="https://github.com/razel369/croast/issues"
+              href="https://github.com/razel369/roast-my-page/issues"
               target="_blank"
               rel="noreferrer"
               className="transition-colors duration-200 hover:text-vermillion"

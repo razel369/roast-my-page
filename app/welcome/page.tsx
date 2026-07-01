@@ -17,6 +17,33 @@ import { ManageSubscriptionButton } from "@/components/ManageSubscriptionButton"
 // Render-blocking metadata only — use the parent layout's defaults;
 // /welcome is mostly a logged-in destination, not a marketing page.
 
+
+function OnboardingStep({ num, title, body, href, hrefLabel, done }: { num: string; title: string; body: string; href: string | null; hrefLabel: string; done: boolean }) {
+  return (
+    <li className="flex items-start gap-4 border border-ink-900 bg-bone-50 px-4 py-3">
+      <span
+        className={
+          "grid h-8 w-8 shrink-0 place-items-center font-mono text-[10px] font-bold uppercase tracking-stamped " +
+          (done ? "bg-forest text-bone-50" : "bg-bone-200 text-ink-500")
+        }
+      >
+        {done ? "✓" : num}
+      </span>
+      <div className="flex-1">
+        <div className="font-display text-base font-bold text-ink-900">
+          {title}
+          {done && <span className="ml-2 font-mono text-[10px] uppercase tracking-stamped text-forest">Done</span>}
+        </div>
+        <p className="mt-1 font-body text-sm text-ink-700 leading-relaxed">{body}</p>
+        {href && hrefLabel && (
+          <Link href={href} className="mt-2 inline-block font-mono text-[10px] uppercase tracking-stamped text-vermillion hover:underline">
+            {hrefLabel} →
+          </Link>
+        )}
+      </div>
+    </li>
+  );
+}
 function WelcomeInner() {
   const params = useSearchParams();
   const checkoutId = params.get("checkout_id") || params.get("session_id");
@@ -159,6 +186,56 @@ function WelcomeInner() {
         </Link>
       </div>
 
+      {/* Pro onboarding — first 24 hours */}
+      <div className="mt-12 border-2 border-ink-900 bg-bone-50">
+        <header className="flex items-center justify-between border-b-2 border-ink-900 bg-bone-200 px-4 py-3">
+          <span className="flex items-baseline gap-3">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-stamped text-vermillion">
+              FIRST 24 HOURS
+            </span>
+            <span className="font-display text-lg font-bold text-ink-900">
+              Your Pro onboarding
+            </span>
+          </span>
+          <span className="font-mono text-[9px] uppercase tracking-stamped text-ink-500">
+            § I · III
+          </span>
+        </header>
+        <ol className="space-y-3 p-4">
+          <OnboardingStep
+            num="01"
+            title="Save your Pro token"
+            body="Copy the token above into a password manager. It is the only way to call the Pro API from your own tools or scripts."
+            href={null}
+            hrefLabel=""
+            done={true}
+          />
+          <OnboardingStep
+            num="02"
+            title="Run your first multi-page audit"
+            body="Paste your homepage, pricing page, and signup page URLs. Croast will tell you which one is your weakest link."
+            href="/"
+            hrefLabel="Run multi-page audit"
+            done={false}
+          />
+          <OnboardingStep
+            num="03"
+            title="Watch your site score over time"
+            body="Re-run the same URLs once a week. The score history lives in your browser, and trends surface on the home page."
+            href="/history"
+            hrefLabel="Open history"
+            done={false}
+          />
+          <OnboardingStep
+            num="04"
+            title="Export to CSV for stakeholders"
+            body="If you need to share the verdict with your designer or PM, the CSV download is on every results page."
+            href={null}
+            hrefLabel=""
+            done={false}
+          />
+        </ol>
+      </div>
       <div className="mt-12 border border-ink-900 bg-bone-100 p-5 text-center">
         <p className="font-mono text-[11px] uppercase tracking-stamped text-ink-700">
           Need to manage billing, invoices, or cancel?
