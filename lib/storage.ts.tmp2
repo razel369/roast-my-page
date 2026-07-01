@@ -1,4 +1,4 @@
-import type { RoastResult } from "./types";
+﻿import type { RoastResult } from "./types";
 
 const STORAGE_KEY = "rmp_history_v1";
 
@@ -33,7 +33,7 @@ export function saveRoast(result: RoastResult): void {
       encoded: encodeRoast(result),
       roast: result,
     };
-    const filtered = list.filter(function (e) { return e.domain !== result.domain; });
+    const filtered = list.filter((e) => e.domain !== result.domain);
     filtered.unshift(entry);
     w.localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered.slice(0, 25)));
   } catch {
@@ -67,9 +67,41 @@ export function deleteRoast(id: string): void {
     const raw = w.localStorage.getItem(STORAGE_KEY);
     if (!raw) return;
     const list: HistoryEntry[] = JSON.parse(raw);
-    w.localStorage.setItem(STORAGE_KEY, JSON.stringify(list.filter(function (e) { return e.id !== id; })));
+    w.localStorage.setItem(STORAGE_KEY, JSON.stringify(list.filter((e) => e.id !== id)));
   } catch {}
 }
+
+// Base64 (utf-8 safe) encoding so shareable URLs work with any text
+export function encodeRoast(result: RoastResult): string {
+  const json = JSON.stringify(result);
+  if (typeof window === "undefined") {
+    return Buffer.from(json, "utf-8").toString("base64url");
+  }
+  // Browser
+  const bytes = new TextEncoder().encode(json);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+export function decodeRoast(encoded: string): RoastResult | null {
+  try {
+    const b64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
+    if (typeof window === "undefined") {
+      const json = Buffer.from(padded, "base64").toString("utf-8");
+      return JSON.parse(json) as RoastResult;
+    }
+    const bin = atob(padded);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const json = new TextDecoder().decode(bytes);
+    return JSON.parse(json) as RoastResult;
+  } catch {
+    return null;
+  }
+}
+
 
 export interface TrendPoint {
   timestamp: number;
@@ -142,35 +174,4 @@ export function getTrendSummary(): TrendSummary {
     lastDirection: direction,
     lastDelta: delta,
   };
-}
-
-// Base64 (utf-8 safe) encoding so shareable URLs work with any text
-export function encodeRoast(result: RoastResult): string {
-  const json = JSON.stringify(result);
-  if (typeof window === "undefined") {
-    return Buffer.from(json, "utf-8").toString("base64url");
-  }
-  // Browser
-  const bytes = new TextEncoder().encode(json);
-  let bin = "";
-  for (const b of bytes) bin += String.fromCharCode(b);
-  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-}
-
-export function decodeRoast(encoded: string): RoastResult | null {
-  try {
-    const b64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
-    const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
-    if (typeof window === "undefined") {
-      const json = Buffer.from(padded, "base64").toString("utf-8");
-      return JSON.parse(json) as RoastResult;
-    }
-    const bin = atob(padded);
-    const bytes = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    const json = new TextDecoder().decode(bytes);
-    return JSON.parse(json) as RoastResult;
-  } catch {
-    return null;
-  }
 }

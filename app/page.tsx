@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useCallback, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { RoastForm } from "@/components/RoastForm";
@@ -15,6 +15,7 @@ import { ProFeaturesTeaser } from "@/components/ProFeaturesTeaser";
 import { MultiPageResults } from "@/components/MultiPageResults";
 import { ResultTLDR } from "@/components/ResultTLDR";
 import { RoastLoader } from "@/components/RoastLoader";
+import { TrendChart } from "@/components/TrendChart";
 import type { RoastResult, MultiPageRoast } from "@/lib/types";
 
 export default function HomePage() {
@@ -54,6 +55,7 @@ export default function HomePage() {
         </div>
       ) : (
         <>
+          <div suppressHydrationWarning><TrendChart /></div>
           <SocialProof />
           <Features />
           <HowItWorks />
