@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { MultiPageRoast, RoastResult } from "@/lib/types";
 import { ShareButton } from "./ShareButton";
+import { exportMultiPageToCsv } from "@/lib/csvExport";
 import { FeedbackWidget } from "./FeedbackWidget";
 import { DiagnosticGrid } from "./DiagnosticGrid";
 import { ActionPlanChecklist } from "./ActionPlanChecklist";
@@ -62,6 +63,13 @@ export function MultiPageResults({ result }: Props) {
             </h2>
             <div className="mt-3 flex flex-wrap items-center gap-3">
               <ShareButton result={result.pages[0]} />
+              <button
+                type="button"
+                onClick={() => exportMultiPageToCsv(result)}
+                className="btn-ghost-stamp"
+              >
+                Download CSV
+              </button>
             </div>
           </div>
         </div>

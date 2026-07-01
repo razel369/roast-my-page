@@ -88,19 +88,33 @@ export default async function Image({ params }: { params: { id: string } }) {
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div
             style={{
-              width: 48,
-              height: 48,
-              borderRadius: 12,
-              background: "#f97316",
+              width: 56,
+              height: 56,
+              borderRadius: 9999,
+              border: "2px solid #f97316",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 32,
             }}
           >
-            🔥
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path
+                d="M16 6 C 12 11, 11 14, 12 17 C 9 17, 8 21, 11 24 C 13 26, 19 26, 21 24 C 24 21, 23 17, 20 17 C 21 14, 20 11, 16 6 Z"
+                fill="#f97316"
+              />
+              <path
+                d="M11.5 16.5 L 14.5 19.5 L 20.5 13.5"
+                stroke="#0b0b0e"
+                strokeWidth="2"
+                strokeLinecap="square"
+                fill="none"
+              />
+            </svg>
           </div>
-          <div style={{ fontSize: 28, fontWeight: 700 }}>Croast</div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1 }}>Croast</div>
+            <div style={{ fontSize: 14, color: "#a1a1aa", letterSpacing: 2, marginTop: -2 }}>YOUR AI CONVERSION ENGINEER</div>
+          </div>
           <div style={{ marginLeft: "auto", fontSize: 20, color: "#a1a1aa" }}>
             croast.io
           </div>

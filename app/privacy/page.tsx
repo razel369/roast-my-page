@@ -124,14 +124,14 @@ export default function PrivacyPage() {
           Contact
         </h2>
         <p>
-          Questions, removals, or complaints: open an issue at{" "}
+          To delete your server-side data (newsletter email), POST to <code className="font-mono">/api/delete-my-data</code> with your email in the body. Your saved verdicts live in your browser and can be cleared from the history page or via your browser settings. Your saved verdicts live in your browser and can be cleared from the history page or via your browser settings. For other questions, removals, or complaints, open an issue at{" "}
           <a
-            href="https://github.com/razel369/croast/issues"
+            href="https://github.com/razel369/roast-my-page/issues"
             target="_blank"
             rel="noreferrer"
             className="underline decoration-vermillion decoration-2 underline-offset-4 hover:text-vermillion"
           >
-            github.com/razel369/croast/issues
+            github.com/razel369/roast-my-page/issues
           </a>.
         </p>
 

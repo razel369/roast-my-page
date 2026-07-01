@@ -2,6 +2,7 @@
 import type { RoastResult } from "@/lib/types";
 import { Stamp } from "./Stamp";
 import { ShareButton } from "./ShareButton";
+import { exportSinglePageToCsv } from "@/lib/csvExport";
 import { FeedbackWidget } from "./FeedbackWidget";
 import { DiagnosticGrid } from "./DiagnosticGrid";
 import { HeroRewriteCard } from "./HeroRewriteCard";
@@ -127,6 +128,7 @@ export function RoastResults({ result, source }: Props) {
           <div className="flex flex-col items-center gap-3 sm:items-end">
             <Stamp score={result.score} verdict={result.verdictLabel} size="lg" />
             <ShareButton result={result} />
+          <button type="button" onClick={() => exportSinglePageToCsv(result)} className="btn-ghost-stamp">Download CSV</button>
           </div>
         </div>
       </header>
