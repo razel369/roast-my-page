@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getHistory, clearHistory, deleteRoast, type HistoryEntry } from "@/lib/storage";
+import { TrendChart } from "@/components/TrendChart";
 
 export default function HistoryPage() {
   const [items, setItems] = useState<HistoryEntry[]>([]);
@@ -47,6 +48,11 @@ export default function HistoryPage() {
             Clear all
           </button>
         )}
+      </div>
+
+      <div className="mt-8">
+        <div className="filing mb-3">§ Score trend · last 10</div>
+        <TrendChart />
       </div>
 
       <div className="mt-4 space-y-3">
