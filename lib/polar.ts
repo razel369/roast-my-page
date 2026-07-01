@@ -14,6 +14,7 @@ export interface PolarConfig {
   accessToken: string;
   organizationId: string;
   productPro: string;
+  productProYearly: string;
   productTeam: string;
   webhookSecret: string;
   sandbox: boolean;
@@ -26,6 +27,7 @@ export function getPolarConfig(): PolarConfig {
     accessToken,
     organizationId: process.env.POLAR_ORGANIZATION_ID || "",
     productPro: process.env.POLAR_PRODUCT_PRO_ID || "",
+    productProYearly: process.env.POLAR_PRODUCT_PRO_YEARLY_ID || "",
     productTeam: process.env.POLAR_PRODUCT_TEAM_ID || "",
     webhookSecret: process.env.POLAR_WEBHOOK_SECRET || "",
     sandbox: process.env.POLAR_SANDBOX === "true",
@@ -50,13 +52,16 @@ export interface CheckoutSessionResult {
 }
 
 export async function createCheckoutSession(opts: {
-  plan: "pro" | "team";
+  plan: "pro" | "pro-yearly" | "team";
   email?: string;
   successUrl: string;
 }): Promise<CheckoutSessionResult> {
   const cfg = getPolarConfig();
   if (!cfg.enabled) throw new Error("Polar is not configured (POLAR_ACCESS_TOKEN missing).");
-  const productId = opts.plan === "pro" ? cfg.productPro : cfg.productTeam;
+  let productId: string;
+  if (opts.plan === "pro") productId = cfg.productPro;
+  else if (opts.plan === "pro-yearly") productId = cfg.productProYearly;
+  else productId = cfg.productTeam;
   if (!productId) throw new Error(`Polar product id for "${opts.plan}" is not configured.`);
 
   const body: Record<string, unknown> = {

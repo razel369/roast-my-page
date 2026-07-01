@@ -1,17 +1,14 @@
-// OpenAI Chat Completions client — MiniMax M3 compatible.
+// OpenAI Chat Completions client. Defaults to Google Gemini 2.5 Flash
+// (OpenAI-compatible endpoint). Same client works with OpenAI, Anthropic
+// (via a proxy), DeepSeek, Together, Groq, etc — just set LLM_BASE_URL.
 //
-// MiniMax exposes MiniMax-M3 via a standard OpenAI-compatible Chat Completions
-// endpoint, which works with both sk-api (PAYG) and sk-cp (Token Plan) keys.
-//
-// Spec: https://platform.minimaxi.com/docs/api-reference/text-chat-openai
-//       server: https://api.minimaxi.com
-//       endpoint: POST /v1/chat/completions
-//       auth: Authorization: Bearer <key>
+// Google Gemini 2.5 Flash exposes an OpenAI-compatible endpoint at
+// generativelanguage.googleapis.com/v1beta/openai.
 //
 // Configuration (set in .env.local):
-//   LLM_BASE_URL     https://api.minimaxi.com
-//   LLM_API_KEY      sk-cp-... or sk-api-...
-//   LLM_MODEL        MiniMax-M3
+//   LLM_BASE_URL     https://generativelanguage.googleapis.com/v1beta/openai
+//   LLM_API_KEY      AIzaSy... (Google AI Studio key, free tier OK)
+//   LLM_MODEL        gemini-2.5-flash   (or gemini-2.0-flash, gemini-1.5-flash)
 //   LLM_ENABLED      "true" to enable (auto-detected if LLM_API_KEY is set)
 
 export interface ChatMessage {
@@ -44,9 +41,9 @@ export function getLlmConfig(): LlmConfig {
     (enabledFlag !== "false" && apiKey.length > 0);
   return {
     enabled,
-    baseUrl: (process.env.LLM_BASE_URL || "https://api.minimaxi.com").replace(/\/+$/, ""),
+    baseUrl: (process.env.LLM_BASE_URL || "https://generativelanguage.googleapis.com/v1beta/openai").replace(/\/+$/, ""),
     apiKey,
-    model: process.env.LLM_MODEL || "MiniMax-M3",
+    model: process.env.LLM_MODEL || "gemini-2.5-flash",
   };
 }
 

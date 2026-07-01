@@ -10,11 +10,11 @@ export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json().catch(() => ({}))) as {
-      plan?: "pro" | "team";
+      plan?: "pro" | "pro-yearly" | "team";
       email?: string;
     };
     const plan = body.plan;
-    if (!plan || (plan !== "pro" && plan !== "team")) {
+    if (!plan || (plan !== "pro" && plan !== "pro-yearly" && plan !== "team")) {
       return NextResponse.json({ error: "Invalid plan." }, { status: 400 });
     }
 

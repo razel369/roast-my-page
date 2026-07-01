@@ -2,12 +2,13 @@
 import { useState } from "react";
 
 interface Props {
-  plan: "pro" | "team";
+  plan: "pro" | "pro-yearly" | "team";
   price: string;
+  suffix?: string;
   onSuccess?: () => void;
 }
 
-export function PolarCheckoutButton({ plan, price, onSuccess }: Props) {
+export function PolarCheckoutButton({ plan, price, suffix, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +46,7 @@ export function PolarCheckoutButton({ plan, price, onSuccess }: Props) {
             Redirecting to checkout…
           </>
         ) : (
-          <>Subscribe · {price} USD/mo</>
+          <>Subscribe · {price} USD{suffix ?? "/mo"}</>
         )}
       </button>
       {error && (

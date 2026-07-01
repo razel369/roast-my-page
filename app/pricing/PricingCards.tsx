@@ -10,7 +10,8 @@ interface Plan {
   cta: string;
   href: string;
   highlight: boolean;
-  planId?: "pro" | "team";
+  badge?: string;
+  planId?: "pro" | "pro-yearly" | "team";
   features: string[];
 }
 
@@ -31,13 +32,13 @@ const plans: Plan[] = [
     ],
   },
   {
-    name: "Pro",
+    name: "Pro · Monthly",
     price: "$19",
     cadence: "per month",
     blurb: "For founders shipping landing pages every week.",
     cta: "Subscribe",
     href: "#",
-    highlight: true,
+    highlight: false,
     planId: "pro",
     features: [
       "Unlimited single-page verdicts",
@@ -48,12 +49,31 @@ const plans: Plan[] = [
       "Share verdict links + history archive",
     ],
   },
+  {
+    name: "Pro · Yearly",
+    price: "$190",
+    cadence: "per year",
+    blurb: "Two months free. For founders who ship all year.",
+    cta: "Subscribe",
+    href: "#",
+    highlight: true,
+    badge: "Save $38",
+    planId: "pro-yearly",
+    features: [
+      "Everything in Pro Monthly",
+      "$190/yr (~$15.83/mo · saves 17%)",
+      "Lock in the current rate",
+      "Cancel anytime · 30-day money-back",
+      "Best for teams shipping weekly",
+      "Priority in feature requests",
+    ],
+  },
 ];
 
 export function PricingCards() {
   return (
     <>
-      <div className="mt-10 grid gap-4 lg:grid-cols-2 lg:max-w-3xl lg:mx-auto">
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-4xl lg:mx-auto">
         {plans.map((p) => (
           <article
             key={p.name}
@@ -61,7 +81,7 @@ export function PricingCards() {
           >
             {p.highlight && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-vermillion text-bone-50 px-3 py-1 font-mono text-[9px] uppercase tracking-stamped font-bold">
-                Most popular
+                {p.badge ?? "Most popular"}
               </div>
             )}
             <div className="exhibit-head">
@@ -82,7 +102,11 @@ export function PricingCards() {
 
               {p.planId ? (
                 <div className="mt-5">
-                  <PolarCheckoutButton plan={p.planId} price={p.price} />
+                  <PolarCheckoutButton
+                    plan={p.planId}
+                    price={p.price}
+                    suffix={p.planId === "pro-yearly" ? "/yr" : "/mo"}
+                  />
                 </div>
               ) : (
                 <Link
@@ -108,7 +132,7 @@ export function PricingCards() {
 
       <div className="mt-10 text-center">
         <p className="filing text-[11px]">
-          All paid plans billed monthly. Cancel anytime. Payments powered by Polar.sh.
+          Monthly or yearly. Cancel anytime. Payments powered by Polar.sh.
           <br />
           Apple Pay, Google Pay, and 30+ local payment methods supported globally.
         </p>
