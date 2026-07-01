@@ -194,10 +194,7 @@ export function RoastResults({ result, source }: Props) {
               No issues filed. You are in the top quartile. Test, do not guess.
             </div>
           ) : (
-            <DiagnosticGrid
-              killers={result.killers}
-              heroRewriteHeadline={result.heroRewrite.headline}
-            />
+            <DiagnosticGrid killers={result.killers} />
           )}
         </div>
       </section>
