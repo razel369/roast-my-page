@@ -12,3 +12,6 @@ next-env.d.ts
 coverage
 *.tsbuildinfo
 audit-output/
+
+*.tmp
+*.tmp2
