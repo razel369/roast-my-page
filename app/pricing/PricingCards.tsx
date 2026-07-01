@@ -40,30 +40,12 @@ const plans: Plan[] = [
     highlight: true,
     planId: "pro",
     features: [
-      "Unlimited verdicts",
-      "Before and after diff generator",
-      "Visual layout audit (screenshot)",
-      "LLM-enriched qualitative critique",
-      "Cloud archive across devices",
-      "PDF export and email to team",
-    ],
-  },
-  {
-    name: "Team",
-    price: "$79",
-    cadence: "per month",
-    blurb: "For agencies and growth teams.",
-    cta: "Subscribe",
-    href: "#",
-    highlight: false,
-    planId: "team",
-    features: [
-      "Everything in Pro",
-      "Up to 10 seats",
-      "Shared workspace and comments",
-      "White-label verdict reports",
-      "Priority LLM routing",
-      "API access",
+      "Unlimited single-page verdicts",
+      "Multi-page funnel audits (up to 5 URLs)",
+      "Site-level score + flow analysis",
+      "AI-enriched critique (when LLM key configured)",
+      "Visual layout audit (when Browserless configured)",
+      "Share verdict links + history archive",
     ],
   },
 ];
@@ -71,7 +53,7 @@ const plans: Plan[] = [
 export function PricingCards() {
   return (
     <>
-      <div className="mt-10 grid gap-4 lg:grid-cols-3">
+      <div className="mt-10 grid gap-4 lg:grid-cols-2 lg:max-w-3xl lg:mx-auto">
         {plans.map((p) => (
           <article
             key={p.name}
